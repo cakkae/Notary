@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->text('email')->nullable();
             $table->text('company_city')->nullable();
             $table->text('company_address')->nullable();
-            $table->json('feeQuantityRange')->nullable();
+            $table->text('feeQuantityRange')->nullable();
             $table->timestamps();
         });
 
@@ -49,7 +49,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->json('coverage')->nullable();
+            $table->text('coverage')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -188,9 +188,9 @@ class CreateUsersTable extends Migration
             $table->string('borrower_middle_name');
             $table->string('borrower_last_name');
             $table->string('borrower_email');
-            $table->json('coborrower_name')->nullable();
-            $table->json('coborrower_middle_name')->nullable();
-            $table->json('coborrower_last_name')->nullable();
+            $table->text('coborrower_name')->nullable();
+            $table->text('coborrower_middle_name')->nullable();
+            $table->text('coborrower_last_name')->nullable();
             $table->string('contact_number_home');
             $table->string('contact_number_mobile')->nullable();
             $table->string('contact_number_alt')->nullable();
