@@ -1,0 +1,5 @@
+1) Dodati vise pitanja u Kviz 1 Dodati Button "Frage anzeigen" u GUI
+Na svakom kliku na ovaj Button ce se pojavljivati novo pitanje
+Na kraju treba stajati " keine weiteren Fragen"
+2)
+Napravi listu svi quizzija i jedan button "zeige Fragen"na kojem ce prikazati sva pitanja tog odabranog kviza

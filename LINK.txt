@@ -1,0 +1,2 @@
+https://investmentnovel.com/how-to-create-roles-and-permissions-in-laravel-from-scratch/
+https://medium.com/@tomgrohl/implementing-user-roles-into-a-laravel-application-f8b9b5c266a7
