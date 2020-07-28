@@ -54,12 +54,30 @@
                                         </label>
                                         <input type="text" class="form-control email" value="{{ $company->email }}" name="email">
                                     </div>
-                                    <div class="col-md-12 py-20">
+                                    <div class="col-md-6 py-20">
                                         <label>
-                                            Company address:
+                                            Address:
                                         </label>
                                         <input type="text" class="form-control company_address" value="{{ $company->company_address }}" name="company_address">
                                     </div>  
+                                    <div class="col-md-6 py-20">
+                                        <label>
+                                            City:
+                                        </label>
+                                        <input type="text" class="form-control company_city" value="{{ $company->company_city }}" name="company_city">
+                                    </div>
+                                    <div class="col-md-6 py-20">
+                                        <label>
+                                            State:
+                                        </label>
+                                        <input type="text" class="form-control company_state" value="{{ $company->company_state }}" name="company_state">
+                                    </div>
+                                    <div class="col-md-6 py-20">
+                                        <label>
+                                            ZIP:
+                                        </label>
+                                        <input type="text" class="form-control company_zip" value="{{ $company->company_zip }}" name="company_zip">
+                                    </div>
                                     <div class="col-md-12 py-20">
                                         <button type="button" class="btn btn-primary btn-lg accountSaveChanges">SAVE CHANGES</button>
                                     </div>
@@ -300,6 +318,9 @@ $(document).ready(function(){
         var contact_name = $('.contact_name').val();
         var email = $('.email').val();
         var company_address = $('.company_address').val();
+        var company_city = $('.company_city').val();
+        var company_zip = $('.company_zip').val();
+        var company_state = $('.company_state').val();
         var contact_number = $('.contact_number').val();
 
         var company_id = $('input[name="company_id"]').val();
@@ -313,7 +334,10 @@ $(document).ready(function(){
                         contact_name:contact_name,
                         email:email,
                         contact_number:contact_number,
-                        company_address:company_address
+                        company_address:company_address,
+                        company_state:company_state,
+                        company_zip:company_zip,
+                        company_city:company_city
                     },
                 success: function(data) {
                     if($.isEmptyObject(data.error)){

@@ -21,6 +21,8 @@ class CreateUsersTable extends Migration
             $table->text('email')->nullable();
             $table->text('company_city')->nullable();
             $table->text('company_address')->nullable();
+            $table->text('company_state')->nullable();
+            $table->text('company_zip')->nullable();
             $table->text('feeQuantityRange')->nullable();
             $table->timestamps();
         });
