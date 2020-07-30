@@ -83,8 +83,8 @@
                                          ><i class="fas fa-edit"></button></td>
                                     <td>{{ $order->loan_id }}</td>
                                     <td>{{ $order->file_id }}</td>
-                                    <td>{{ $order->closing_time_and_date }}</td>
-                                    <td>{{ $order->borrower_name }}</td>
+                                    <td>{{ filterDate($order->closing_time_and_date) }}</td>
+                                    <td>{{ $order->borrower_name.' '.$order->borrower_surname }}</td>
                                     <td>{{ $order->close_location_street_name }}</td>
                                     <td>{{ $order->property_location_city }}</td>
                                     <td>{{ $order->property_location_zip }}</td>
@@ -519,6 +519,14 @@ function validate(formData, jqForm, options) {
             });
         })
 
+        $('select[name="property_location_state"]').change(function(e) {
+            if(isSameLocation()) 
+            {
+                var selectedItem = $("select[name='property_location_state']").val();
+                $("select[name='close_location_state'] option[value="+selectedItem+"]").prop('selected', true);
+            }
+        });
+        
         $('.same_property_location').on('click', function() {
             if(isSameLocation()) 
                 sameCloseAddress()
@@ -547,10 +555,11 @@ function validate(formData, jqForm, options) {
             $('.close_location_additional_street_name').attr("disabled", true);
             $('.close_location_city').val($('.property_location_city').val());
             $('.close_location_city').attr("disabled", true);
-            $('.close_location_state').val($('.property_location_state').val());
-            $('.close_location_state').attr("disabled", true);
             $('.close_location_zip').val($('.property_location_zip').val());
             $('.close_location_zip').attr("disabled", true);
+            var selectedItem = $("select[name='property_location_state']").val();
+            $("select[name='close_location_state']").prop('disabled', true);
+            $("select[name='close_location_state'] option[value="+selectedItem+"]").prop('selected', true);
         }
 
         function differentCloseAddress() {
@@ -559,6 +568,7 @@ function validate(formData, jqForm, options) {
             $('.close_location_city').attr("disabled", false);
             $('.close_location_state').attr("disabled", false);
             $('.close_location_zip').attr("disabled", false);
+            $("select[name='close_location_state']").prop('disabled', false);
         }
 
         var count = 0;

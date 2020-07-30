@@ -50,10 +50,10 @@ if(! function_exists('filterDate')) {
       $day = $newDate[2];
       switch ($month) {
       case "1":
-          $month = 'Januar';
+          $month = 'January';
           break;
       case "2":
-          $month = 'Februar';
+          $month = 'February';
           break;
       case "3":
           $month = 'Mart';
@@ -62,33 +62,33 @@ if(! function_exists('filterDate')) {
           $month = 'April';
           break;
       case "5":
-          $month = 'Maj';
+          $month = 'May';
           break;
       case "6":
-          $month = 'Juni';
+          $month = 'June';
           break;
       case "7":
-          $month = 'Juli';
+          $month = 'July';
           break;
       case "8":
           $month = 'August';
           break;
       case "9":
-          $month = 'Septembar';
+          $month = 'September';
           break;
       case "10":
-          $month = 'Oktobar';
+          $month = 'October';
           break;
       case "11":
-          $month = 'Novembar';
+          $month = 'November';
           break;
       case "12":
-          $month = 'Decembar';
+          $month = 'December';
           break;
       default:
           $month = 'Greska!';
   }
-      echo $day.'.'.$month.'.'.$year;
+      echo $month.'.'.$day.'.'.$year;
     }
 } 
 ?>

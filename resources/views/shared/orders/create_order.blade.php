@@ -98,19 +98,42 @@
                                 </label>
                         </div>
                         <div class="col-md-6 py-20">
-                            <label>Borrower Name</label>
                             <div class="row">
+                            <div class="col-md-12">
+                                <label>Borrower Name</label>
+                            </div>
                                 <div class="col-md-4">
                                     <input type="text" class="form-control borrower_name" name="borrower_name" placeholder="First name">
                                 </div>
-                                <div class="col-md-4 py-20">
+                                <div class="col-md-4 ">
                                     <input type="text" class="form-control borrower_middle_name" name="borrower_middle_name" placeholder="Middle name">
                                 </div>
-                                <div class="col-md-4 py-20">
+                                <div class="col-md-4 ">
                                     <input type="text" class="form-control borrower_last_name" name="borrower_last_name" placeholder="Last Name">
                                 </div>
                                 <div class="col-md-12 py-20">
-                                    <input type="email" class="form-control borrower_email" name="borrower_email" placeholder="Email">
+                                    <label>Contact Number </label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width: 80px; max-width: 120px">Home:</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-label="Home number" name="contact_number_home">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width: 80px; max-width: 100px">Mobile:</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-label="Mobile number" name="contact_number_mobile">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" style="width: 80px; max-width: 100px">Alt:</span>
+                                        </div>
+                                        <input type="text" class="form-control" aria-label="Alt number" name="contact_number_alt">
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <input type="email" class="form-control borrower_email" name="borrower_email" placeholder="Email">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -141,28 +164,7 @@
                             <tfoot></tfoot>
                             </table>
                         </div>
-                        <div class="col-md-6 py-20">
-                            <label>Contact Number </label>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" style="width: 80px; max-width: 120px">Home:</span>
-                                </div>
-                                <input type="text" class="form-control" aria-label="Home number" name="contact_number_home">
-                            </div>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" style="width: 80px; max-width: 100px">Mobile:</span>
-                                </div>
-                                <input type="text" class="form-control" aria-label="Mobile number" name="contact_number_mobile">
-                            </div>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" style="width: 80px; max-width: 100px">Alt:</span>
-                                </div>
-                                <input type="text" class="form-control" aria-label="Alt number" name="contact_number_alt">
-                            </div>
-                        </div>
-                        <div class="col-md-6 py-20">
+                        <div class="col-md-6">
                             <label>Closing Time and Date</label>
                             <input type="datetime-local" class="form-control input-lg" name="closing_time_and_date"/>
                         </div>
