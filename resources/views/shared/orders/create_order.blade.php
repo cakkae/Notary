@@ -42,7 +42,7 @@
                         <div class="col-md-6 py-20">
                             <label>Property Location</label>
                             <div class="row">
-                                <div class="col-md-12 py-20">
+                                <div class="col-md-12">
                                     <input type="text" class="form-control property_location_street_name" name="property_location_street_name" placeholder="Street name">
                                 </div>
                                 <div class="col-md-12 py-20">
@@ -68,7 +68,7 @@
                         <div class="col-md-6 py-20">
                         <label>Close Location</label>
                             <div class="row">
-                                <div class="col-md-12 py-20">
+                                <div class="col-md-12">
                                     <input type="text" class="form-control close_location_street_name" name="close_location_street_name" placeholder="Street name">
                                 </div>
                                 <div class="col-md-12 py-20">
@@ -100,7 +100,7 @@
                         <div class="col-md-6 py-20">
                             <label>Borrower Name</label>
                             <div class="row">
-                                <div class="col-md-4 py-20">
+                                <div class="col-md-4">
                                     <input type="text" class="form-control borrower_name" name="borrower_name" placeholder="First name">
                                 </div>
                                 <div class="col-md-4 py-20">
