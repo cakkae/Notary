@@ -16,6 +16,7 @@ class Settings extends Controller
             $users = DB::table('users')
             ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
             ->select('users.*', 'user_roles.*')
+            ->where('user_roles.role_id', '4')
             ->get();
         } catch (Exception $ex) {
 

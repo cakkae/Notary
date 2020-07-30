@@ -90,14 +90,52 @@ class Company extends Controller
         }
     }
 
+    public function createSuperAdmin(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'surname' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error'=> $validator->errors()->first()]);
+        } 
+
+        try {
+            $user = new User();
+            $user->name = $request->name;
+            $user->lastName = $request->surname;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->company_id = 1;
+            $user->save();
+            $user_id = $user->id;
+
+            DB::table('user_roles')->insert([
+                'user_id' => $user_id,
+                'role_id' => '4'
+            ]);
+
+            return response()->json(['success'=>'Super Admin successfully created.']);
+
+        } catch (Exception $e) {
+            return response()->json(['error'=> $e.getMessage()]);
+        }
+
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'company_name' => 'required',
             'contact_name' => 'required',
-            'contact_number' => 'required|numeric',
+            'contact_number' => 'required',
             'email' => 'required|email',
-            'company_address' => 'required'
+            'company_address' => 'required',
+            'company_city' => 'required',
+            'company_state' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -137,7 +175,7 @@ class Company extends Controller
             'company_id' => 'required|max:255',
             'company_name' => 'required',
             'contact_name' => 'required',
-            'contact_number' => 'required|numeric',
+            'contact_number' => 'required',
             'email' => 'required|email',
             'company_address' => 'required'
         ]);
@@ -153,7 +191,10 @@ class Company extends Controller
                     'contact_name' => $request->contact_name,
                     'contact_number' => $request->contact_number,
                     'email' => $request->email,
-                    'company_address' => $request->company_address
+                    'company_address' => $request->company_address,
+                    'company_state' => $request->company_state,
+                    'company_city' => $request->company_city,
+                    'company_zip' => $request->company_zip
                 ));
             return response()->json(['success'=>'Company details successfully updated.']);
         } catch (Exception $e) {

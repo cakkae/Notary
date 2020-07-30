@@ -70,7 +70,7 @@
                                         Super Admin tab:
                                     </div>
                                     <div class="col-md-6" style="text-align: right;">
-                                        <button type="button" class="btn btn-primary">ADD SUPER ADMIN</button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addSuperAdminModal">ADD SUPER ADMIN</button>
                                     </div>
                                 </div>
                             </h5>
@@ -114,6 +114,53 @@
     </div>
 </div>
 
+
+<!-- Add Order Modal -->
+<div class="modal fade" id="addSuperAdminModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Super Admin</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+            {{ csrf_field() }}
+            <input type="hidden" value="{{ Auth::user()->id }}" name="created_by">
+            <div class="row">
+                <div class="col-md-6 py-20">
+                    <label for="owner_name">Name:</label>
+                    <input type="text" class="form-control owner_name" name="owner_name">
+                </div>
+                <div class="col-md-6 py-20">
+                    <label for="owner_surname">Surname:</label>
+                    <input type="text" class="form-control owner_surname" name="owner_surname">
+                </div>
+                <div class="col-md-6 py-20">
+                    <label for="owner_email">Email:</label>
+                    <input type="text" class="form-control owner_email" name="owner_email">
+                </div>
+                <div class="col-md-6 py-20">
+                    <label for="owner_password">Password:</label>
+                    <input type="password" class="form-control owner_password" name="owner_password">
+                </div>
+            </div>    
+        </div>
+      <div class="modal-footer">
+        <div class="col-md-4">
+            <button type="button" class="btn btn-danger btn-lg btn-block" data-dismiss="modal">Close</button>
+        </div>
+        <div class="col-md-4">
+            <button type="button" class="btn btn-primary btn-lg btn-block addSuperAdmin">Add Super Admin</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
 $(document).ready(function(){
     $('#info-tab').click();
@@ -122,6 +169,35 @@ $(document).ready(function(){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+    });
+
+    $('.addSuperAdmin').on('click', function() {
+        var name = $('.owner_name').val();
+        var surname = $('.owner_surname').val();
+        var email = $('.owner_email').val();
+        var password = $('.owner_password').val();
+
+        $.ajax({
+            type:'POST',
+            url: "{{ route('add_super_admin') }}",
+            data: {
+                name: name,
+                surname: surname,
+                email: email,
+                password: password
+            },
+            success: function(data) {
+                    if($.isEmptyObject(data.error)){
+                        toastr.success(data.success);
+                        window.location.reload();
+                    }else{
+                        toastr.error(data.error);
+                    }
+                },
+                error: function(jqXHR, textStatus, error) { 
+                    
+                }
+        });
     });
 
     $('.changeOrganizationInfo').on('click', function() {

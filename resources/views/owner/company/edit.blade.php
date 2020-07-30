@@ -266,9 +266,12 @@
 
 
 <script type="text/javascript">
-$(document).ready(function(){
+$(document).ready(function($){
     // $('#accountInfo-tab').click();
-    $('#users-tab').click();
+
+    $('.contact_number').mask('123-123-1234');
+
+    // $('#users-tab').click();
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

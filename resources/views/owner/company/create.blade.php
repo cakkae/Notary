@@ -70,7 +70,10 @@
     </div>
 </div>
 <script>
-$(document).ready(function (){
+$(document).ready(function ($){
+
+    $('.contact_number').mask('123-123-1234');
+
     $('.createNewCompany').on('click', function() {
         $.ajaxSetup({
             headers: {
@@ -79,7 +82,6 @@ $(document).ready(function (){
         });
 
         var company_name = $('.company_name').val();
-        var contact_name = $('.contact_name').val();
         var contact_name = $('.contact_name').val();
         var email = $('.email').val();
         var company_address = $('.company_address').val();
@@ -107,6 +109,7 @@ $(document).ready(function (){
             success: function(data) {
                 if($.isEmptyObject(data.error)){
                     toastr.success(data.success);
+                    window.location.href = "{{ url('/owner/company') }}";
                 }else{
                     toastr.error(data.error);
                 }

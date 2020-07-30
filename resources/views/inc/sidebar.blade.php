@@ -43,6 +43,16 @@
             </div>
           </div> 
         </a>
+        <a href="<?= url('shared/vendors'); ?>" class="{{ (request()->segment(2) == 'vendors') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
+          <div class="row">
+            <div class="col-md-1">
+              <i class="fal fa-user"></i>
+            </div>
+            <div class="col-md-9">
+              Vendors
+            </div>
+          </div> 
+        </a>
       </div>
       @endif
 

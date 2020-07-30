@@ -50,6 +50,7 @@ Route::namespace('Owner')->group(function () {
         Route::post('/create_user', 'Company@createUser')->name('create_user')->middleware('role:Owner');
         Route::post('/update_organization_info', 'Settings@updateOrganization')->name('update_organization_info')->middleware('role:Owner');
         Route::resource('company', 'Company')->middleware('role:Owner');
+        Route::post('/add_super_admin', 'Company@createSuperAdmin')->name('add_super_admin')->middleware('role:Owner');
     });
 });
 
@@ -85,10 +86,10 @@ Route::post('/add_document_order', 'Shared\Order@addDocuments')->name('add_docum
 Route::post('/send_order_email', 'Shared\Order@send_order_email')->name('send_order_email')->middleware('role:User,Admin');
 Route::get('/uploaded_documents_list/{order_id}','Order@getAllDocumentsByOrder')->name('uploaded_documents_list')->middleware('role:User,Admin');
 Route::delete('/delete_document/{document_id}','Order@deleteDocument')->name('delete_document')->middleware('role:User,Admin');
-
 Route::post('/sendTestEmail', 'Shared\SendTestEmail@send_email')->name('sendTestEmail');
-
-
+Route::get('/shared/vendors', 'Shared\Vendor@index')->name('shared.vendors');
+Route::get('/shared/vendors/create', 'Shared\Vendor@create')->name('vendor.create');
+Route::post('/shared/vendors/store', 'Shared\Vendor@store')->name('vendor.store');
 
 // Route::get('/', 'HomeController@index')->name('home');
 
