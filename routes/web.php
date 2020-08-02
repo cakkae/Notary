@@ -80,7 +80,7 @@ Route::namespace('Vendor')->group(function () {
 });
 
 
-Route::get('/user', 'Shared\Order@index')->name('shared.orders')->middleware('role:User,Admin');
+Route::get('/user', 'Shared\Order@index')->name('shared.orders')->middleware('role:User,Admin,Client');
 Route::post('/create_order', 'Shared\Order@create')->name('create_order')->middleware('role:User,Admin');
 Route::post('/add_document_order', 'Shared\Order@addDocuments')->name('add_document_order')->middleware('role:User,Admin');
 Route::post('/send_order_email', 'Shared\Order@send_order_email')->name('send_order_email')->middleware('role:User,Admin');

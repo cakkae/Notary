@@ -24,6 +24,10 @@ class RedirectIfAuthenticated
                 return redirect('/user');
             }
 
+            if (Auth::user()->hasRole('Client')) { 
+                return redirect('/user');
+            }
+
             if (Auth::user()->hasRole('Admin')) { 
                 return redirect('/admin');
             }
