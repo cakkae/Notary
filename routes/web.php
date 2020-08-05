@@ -80,7 +80,7 @@ Route::namespace('Vendor')->group(function () {
 });
 
 
-Route::get('/user', 'Shared\Order@index')->name('shared.orders')->middleware('role:User,Admin,Client');
+Route::get('/user', 'Shared\Order@index')->name('shared.orders')->middleware('role:User,Admin,Client,Owner');
 Route::post('/create_order', 'Shared\Order@create')->name('create_order')->middleware('role:User,Admin');
 Route::post('/add_document_order', 'Shared\Order@addDocuments')->name('add_document_order')->middleware('role:User,Admin');
 Route::post('/send_order_email', 'Shared\Order@send_order_email')->name('send_order_email')->middleware('role:User,Admin');
@@ -98,7 +98,7 @@ Route::get('/vendor/dashboard', 'HomeController@index');
 
 // Route::get('/test', function (\Illuminate\Http\Request $request) {
 //     $user = $request->user();
-//     dd($user->hasRole('User'));
+//     dd($user->hasRole('Owner'));
 // });
 
 // Route::get('/test', function (\Illuminate\Http\Request $request) {
@@ -118,6 +118,6 @@ Route::get('/vendor/dashboard', 'HomeController@index');
 
 // Route::get('/test', function (\Illuminate\Http\Request $request) {
 //     $user = $request->user();
-//     $user->modifyPermission('edit');
+//     $user->modifyPermission('delete');
 // });
 
