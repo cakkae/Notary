@@ -27,7 +27,9 @@
                 <div class="card-body ">
                     <table class="table table-responsive" style="display: table;">
                         <tr>
-                            <th>Edit</th>
+                            @if(!$isClient)
+                                <th>Edit</th>
+                            @endif
                             <th>Loan #</th>
                             <th>File #</th>
                             <th>Closing Date</th>
@@ -45,6 +47,7 @@
                         <tbody>
                             @forelse($orders as $order)
                                 <tr>
+                                    @if(!$isClient)
                                     <td><button type="button" class="btn btn-primary editOrder" data-toggle="modal" data-target="#editOrderModal"
                                             data-id="{{ $order->order_id }}"
                                             data-loan="{{ $order->loan_id }}"
@@ -81,6 +84,7 @@
                                             data-special_instructions = "{{ $order->special_instructions }}"
                                             data-status = "{{ $order->status }}"
                                          ><i class="fas fa-edit"></button></td>
+                                    @endif
                                     <td>{{ $order->loan_id }}</td>
                                     <td>{{ $order->file_id }}</td>
                                     <td>{{ filterDate($order->closing_time_and_date) }}</td>

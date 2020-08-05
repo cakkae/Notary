@@ -29,8 +29,10 @@ Route::namespace('Admin')->group(function () {
         Route::get('/', 'Dashboard@index');
         Route::get('/dashboard', 'Dashboard@index');
         Route::get('/order', 'Order@index');
-        // Route::get('/title', 'Coverage@index');
         Route::get('/notary', 'Notary@index');
+        Route::get('/clients', 'Users@clients')->name('client.index');
+        Route::get('/clients/create', 'Users@create')->name('client.create');
+        Route::post('/clients/store', 'Users@store')->name('client.store');
         Route::get('/users', 'Users@index');
         Route::get('/reports', 'Reports@index');
         Route::get('/settings', 'Settings@index');
@@ -41,7 +43,6 @@ Route::namespace('Admin')->group(function () {
 Route::namespace('Owner')->group(function () {
     Route::group(['prefix' => 'owner',  'middleware' => 'auth'], function()
     {
-
         Route::get('/', 'Dashboard@index')->middleware('role:Owner');
         Route::get('/accouting', 'Accouting@index')->middleware('role:Owner');
         Route::get('/settings', 'Settings@index')->name('settings')->middleware('role:Owner');
@@ -81,11 +82,12 @@ Route::namespace('Vendor')->group(function () {
 
 
 Route::get('/user', 'Shared\Order@index')->name('shared.orders')->middleware('role:User,Admin,Client,Owner');
-Route::post('/create_order', 'Shared\Order@create')->name('create_order')->middleware('role:User,Admin');
+Route::post('/create_order', 'Shared\Order@create')->name('create_order')->middleware('role:User,Admin,Client');
 Route::post('/add_document_order', 'Shared\Order@addDocuments')->name('add_document_order')->middleware('role:User,Admin');
 Route::post('/send_order_email', 'Shared\Order@send_order_email')->name('send_order_email')->middleware('role:User,Admin');
 Route::get('/uploaded_documents_list/{order_id}','Order@getAllDocumentsByOrder')->name('uploaded_documents_list')->middleware('role:User,Admin');
 Route::delete('/delete_document/{document_id}','Order@deleteDocument')->name('delete_document')->middleware('role:User,Admin');
+
 Route::post('/sendTestEmail', 'Shared\SendTestEmail@send_email')->name('sendTestEmail');
 Route::get('/shared/vendors', 'Shared\Vendor@index')->name('shared.vendors');
 Route::get('/shared/vendors/create', 'Shared\Vendor@create')->name('vendor.create');

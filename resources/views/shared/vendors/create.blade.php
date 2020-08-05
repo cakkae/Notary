@@ -17,16 +17,8 @@
                                 <input type="text" class="form-control vendor_name" name="vendor_name">
                             </div>
                             <div class="col-md-6 py-20">
-                                <label for="vendor_surname">Surname:</label>
+                                <label for="vendor_surname">Lastname:</label>
                                 <input type="text" class="form-control vendor_surname" name="vendor_surname">
-                            </div>
-                            <div class="col-md-6 py-20">
-                                <label for="vendor_company_id">Company:</label>
-                                <select class="form-control vendor_company_id" name="vendor_company_id">
-                                    @foreach($companies as $company)
-                                        <option value="{{$company->id}}">{{ $company->company_name }}</option>
-                                    @endforeach
-                                </select>
                             </div>
                             <div class="col-md-6 py-20">
                                 <label for="vendor_email">Email:</label>

@@ -41,7 +41,16 @@ class Order extends Controller
                     ->where('user_roles.role_id','2')
                     ->get();
 
-        return view('shared.orders.index', ['orders' => $orders, 'lastOrder' => $lastOrder, 'states' => $states, 'vendors' => $vendors]);
+        $clients = DB::table('users')
+                    ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+                    ->select('users.*', 'user_roles.*')
+                    ->where('user_roles.role_id', '5')
+                    ->get();
+        
+        $user = $request->user();
+        $isClient = $user->hasRole('Client');
+
+        return view('shared.orders.index', ['isClient' => $isClient, 'orders' => $orders, 'clients' => $clients, 'lastOrder' => $lastOrder, 'states' => $states, 'vendors' => $vendors]);
     }
 
     public function addDocuments(Request $request) {

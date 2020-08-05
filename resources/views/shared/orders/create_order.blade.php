@@ -173,10 +173,10 @@
                         </div>
                         <div class="col-md-12 py-20">
                         <label>Client</label>
-                        <select class="form-control" name="close_location_state" id="close_location_state">
-                            <option value="">Select client</option>
-                            @foreach($states as $state) 
-                                <option value="{{ $state->state_id }}">{{ $state->state }}  </option>
+                        <select class="form-control" name="close_location_state" id="close_location_state" <?php if($isClient) echo "disabled";?>>
+                            <option value="" disabled selected>Select client</option>
+                            @foreach($clients as $client) 
+                                <option value="{{ $client->id }}" <?php if($isClient && Auth::user()->id == $client->id) echo "selected";?>>{{ $client->name.' '.$client->lastName }}  </option>
                             @endforeach
                         </select>
                         </div>

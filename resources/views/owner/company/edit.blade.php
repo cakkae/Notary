@@ -30,13 +30,13 @@
                                 @csrf
                                     <input type="hidden" value="{{ $company->id }}" name="company_id">
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 py-20">
                                         <label>
                                             Company name:
                                         </label>
                                         <input type="text" class="form-control company_name" value="{{ $company->company_name }}" name="company_name">
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-6 py-20">
                                         <label>
                                             Contact name:
                                         </label>

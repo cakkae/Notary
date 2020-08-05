@@ -18,7 +18,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-            @if(Auth::check() && (Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Vendor') || Auth::user()->hasRole('Admin') || Auth::user()->hasRole('User')))
+            @if(Auth::check() && (Auth::user()->hasRole('Owner') || Auth::user()->hasRole('Vendor') || Auth::user()->hasRole('Admin') || Auth::user()->hasRole('User') || Auth::user()->hasRole('Client')))
                     <li class="nav-item">
                       Hi, {{ Auth::user()->name }} ({!! App\Role::find(Auth::user()->roles->first()->id)->name !!})  
                     </li>

@@ -117,6 +117,16 @@
             </div>
           </div> 
         </a>
+        <a href="<?= url('admin/clients'); ?>" class="{{ (request()->segment(2) == 'clients') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
+          <div class="row">
+            <div class="col-md-1">
+              <i class="fal fa-user"></i>
+            </div>
+            <div class="col-md-9">
+              Clients
+            </div>
+          </div> 
+        </a>
         <a href="<?= url('admin/settings'); ?>" class="{{ (request()->segment(2) == 'settings') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
           <div class="row">
             <div class="col-md-1">
