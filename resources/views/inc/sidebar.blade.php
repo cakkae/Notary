@@ -137,6 +137,16 @@
             </div>
           </div> 
         </a>
+        <a href="<?= url('admin/productType'); ?>" class="{{ (request()->segment(2) == 'productType') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
+          <div class="row">
+            <div class="col-md-1">
+              <i class="fas fa-align-right"></i>
+            </div>
+            <div class="col-md-9">
+              Product Type
+            </div>
+          </div> 
+        </a>
       </div>
       @endif
       @if(Auth::check() && Auth::user()->hasRole('Vendor'))

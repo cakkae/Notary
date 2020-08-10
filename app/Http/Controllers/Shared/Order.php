@@ -13,6 +13,7 @@ use Auth;
 use Mail;
 use App\Mail\SendMail;
 use App\Models\GeoData;
+use App\Models\ProductType;
 use DB;
 
 class Order extends Controller
@@ -49,8 +50,15 @@ class Order extends Controller
         
         $user = $request->user();
         $isClient = $user->hasRole('Client');
+        
+        $productTypes = ProductType::all();
 
-        return view('shared.orders.index', ['isClient' => $isClient, 'orders' => $orders, 'clients' => $clients, 'lastOrder' => $lastOrder, 'states' => $states, 'vendors' => $vendors]);
+        return view('shared.orders.index', ['productTypes' => $productTypes, 'isClient' => $isClient, 'orders' => $orders, 'clients' => $clients, 'lastOrder' => $lastOrder, 'states' => $states, 'vendors' => $vendors]);
+    }
+
+    public function currentUserEditRequest()
+    {
+        return view('shared.orders.current_edit');
     }
 
     public function addDocuments(Request $request) {

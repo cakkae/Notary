@@ -236,6 +236,12 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('product_types', function (Blueprint $table) {
+            $table->increments('id')->unsigned();
+            $table->text('name');
+            $table->timestamps();
+        });
+
     }
 
     /**

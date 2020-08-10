@@ -27,9 +27,7 @@
                 <div class="card-body ">
                     <table class="table table-responsive" style="display: table;">
                         <tr>
-                            @if(!$isClient)
-                                <th>Edit</th>
-                            @endif
+                            <th>Edit</th>
                             <th>Loan #</th>
                             <th>File #</th>
                             <th>Closing Date</th>
@@ -84,6 +82,8 @@
                                             data-special_instructions = "{{ $order->special_instructions }}"
                                             data-status = "{{ $order->status }}"
                                          ><i class="fas fa-edit"></button></td>
+                                    @else
+                                    <td><button type="button" class="btn btn-primary sendEditOrderModal" data-toggle="modal" data-target="#sendEditOrderModal" data-id="{{ $order->order_id }}"><i class="fas fa-edit"></button></td>
                                     @endif
                                     <td>{{ $order->loan_id }}</td>
                                     <td>{{ $order->file_id }}</td>
@@ -132,6 +132,7 @@
 @include('shared.orders.send_documents')
 @include('shared.orders.create_order')
 @include('shared.orders.edit_order')
+@include('shared.orders.send_edit_order')
 
 <style>
 .tag {

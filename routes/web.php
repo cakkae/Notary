@@ -36,6 +36,9 @@ Route::namespace('Admin')->group(function () {
         Route::get('/users', 'Users@index');
         Route::get('/reports', 'Reports@index');
         Route::get('/settings', 'Settings@index');
+        Route::get('/productType', 'Dashboard@productType')->name('productType');
+        Route::post('/addProductType', 'Dashboard@addProductType')->name('addProductType');
+        Route::delete('/deleteProductType/{product_id}','Dashboard@deleteProductType')->name('deleteProductType');
         Route::post('/updateSettings', 'Settings@update')->name('updateSettings');
     });
 });
@@ -85,8 +88,9 @@ Route::get('/user', 'Shared\Order@index')->name('shared.orders')->middleware('ro
 Route::post('/create_order', 'Shared\Order@create')->name('create_order')->middleware('role:User,Admin,Client');
 Route::post('/add_document_order', 'Shared\Order@addDocuments')->name('add_document_order')->middleware('role:User,Admin');
 Route::post('/send_order_email', 'Shared\Order@send_order_email')->name('send_order_email')->middleware('role:User,Admin');
-Route::get('/uploaded_documents_list/{order_id}','Order@getAllDocumentsByOrder')->name('uploaded_documents_list')->middleware('role:User,Admin');
-Route::delete('/delete_document/{document_id}','Order@deleteDocument')->name('delete_document')->middleware('role:User,Admin');
+Route::get('/uploaded_documents_list/{order_id}','Shared\Order@getAllDocumentsByOrder')->name('uploaded_documents_list')->middleware('role:User,Admin');
+Route::delete('/delete_document/{document_id}','Shared\Order@deleteDocument')->name('delete_document')->middleware('role:User,Admin');
+Route::get('/current_user_edit_orders', 'Shared\Order@currentUserEditRequest')->name('currentUserEditRequest');
 
 Route::post('/sendTestEmail', 'Shared\SendTestEmail@send_email')->name('sendTestEmail');
 Route::get('/shared/vendors', 'Shared\Vendor@index')->name('shared.vendors');
