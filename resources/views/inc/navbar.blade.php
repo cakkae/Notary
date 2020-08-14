@@ -1,17 +1,31 @@
   <div class="d-flex" id="wrapper">
-    @if (request()->route()->getName() !== 'shared.orders')
+    @if (request()->route()->getName() !== 'shared.orders' && request()->route()->getName() !== 'currentUserEditRequest')
       @include('inc.sidebar')
     @endif
     <!-- Page Content -->
     <div id="page-content-wrapper">
 
       <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-        @if (request()->route()->getName() !== 'shared.orders')
+        @if (request()->route()->getName() == 'currentUserEditRequest')
+          <a class="btn btn-primary" href="{{ route('shared.orders') }}">Back to orders</a>
+        @elseif (request()->route()->getName() !== 'shared.orders')
           <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
         @elseif (request()->route()->getName() == 'shared.orders' && Auth::user()->hasRole('Admin'))
           <a class="btn btn-primary" href="/admin">Admin Access</a>
         @elseif (request()->route()->getName() == 'shared.orders' && Auth::user()->hasRole('Client'))
-          <h3>Request for editing orders: <a href="{{ route('currentUserEditRequest') }}"><span style="font-weight: bold;" class="badge badge-success number_of_request_edit_order">0</span></a></h3>
+          <h3>Request for editing orders: <a href="{{ route('currentUserEditRequest') }}"><span style="font-weight: bold;" class="badge badge-success number_of_request_edit_order">{{ \App\Models\OrderRequest::where('user_id', Auth::user()->id)->where('order_status', '0')->count() }}</span></a></h3>
+        @elseif (request()->route()->getName() == 'shared.orders' && (Auth::user()->hasRole('User') || Auth::user()->hasRole('Admin')))
+          <h3>Request for editing orders: 
+            <a href="{{ route('currentUserEditRequest') }}">
+              <span style="font-weight: bold;" class="badge badge-success number_of_request_edit_order">
+                {{ \App\Models\OrderRequest::
+                            where('company_id', Auth::user()->company_id)
+                            ->where('order_status', '0')
+                            ->count() 
+                }}
+              </span>
+            </a>
+          </h3>
         @endif
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

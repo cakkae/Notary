@@ -13,24 +13,20 @@
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Company</th>
                             <th>Order ID</th>
                             <th>Message</th>
-                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                    @forelse($allRequestOrder as $key => $order)
-                        <tr>
+                        @foreach($allRequestOrder as $key => $order)
                             <td>{{ ++$key }}</td>
+                            <td>{{ \App\Models\Company::where('id', $order->company_id)->pluck('company_name')->first() }}</td>
                             <td>{{ $order->order_id }}</td>
                             <td>{{ $order->message }}</td>
-                            <td><h4>{!! show_request_status($order->order_status) !!}</h4></td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4"><h4 style="text-align: center;">No result</h4></td>
-                        </tr>
-                    @endforelse
+                            <td><a href="{{ route('shared.orders.edit', $order->order_id) }}" class="btn btn-primary">Edit Order</button></td>
+                        @endforeach
                     </tbody>
                    </table>
                 </div>

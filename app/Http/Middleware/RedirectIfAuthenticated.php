@@ -21,11 +21,11 @@ class RedirectIfAuthenticated
         if (Auth::guard($guard)->check()) {
 
             if (Auth::user()->hasRole('User')) { 
-                return redirect('/user');
+                return redirect('/orders');
             }
 
             if (Auth::user()->hasRole('Client')) { 
-                return redirect('/user');
+                return redirect('/orders');
             }
 
             if (Auth::user()->hasRole('Admin')) { 

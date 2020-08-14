@@ -26,6 +26,18 @@ if(! function_exists('is_active')) {
   }
 }
 
+if(! function_exists('show_request_status')) {
+  function show_request_status($value){
+    switch($value){
+      case 0:
+       return '<span class="badge badge-danger">Pending</span>';
+       break;
+      case 1:
+       return '<span class="badge badge-success">Finished</span>';
+       break;
+    }
+  }
+}
 
 
 if(! function_exists('show_role')) {

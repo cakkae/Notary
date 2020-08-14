@@ -33,7 +33,7 @@ Route::namespace('Admin')->group(function () {
         Route::get('/clients', 'Users@clients')->name('client.index');
         Route::get('/clients/create', 'Users@create')->name('client.create');
         Route::post('/clients/store', 'Users@store')->name('client.store');
-        Route::get('/users', 'Users@index');
+        Route::get('/orders', 'Users@index');
         Route::get('/reports', 'Reports@index');
         Route::get('/settings', 'Settings@index');
         Route::get('/productType', 'Dashboard@productType')->name('productType');
@@ -83,14 +83,19 @@ Route::namespace('Vendor')->group(function () {
     Route::get('/getZipCode/{country_name}','Coverage@getZipCode');
 });
 
-
-Route::get('/user', 'Shared\Order@index')->name('shared.orders')->middleware('role:User,Admin,Client,Owner');
+Route::get('/orders/{order_id}','Shared\Order@editOrder')->name('shared.orders.edit')->middleware('role:User,Admin');
+Route::get('/orders', 'Shared\Order@index')->name('shared.orders')->middleware('role:User,Admin,Client,Owner');
 Route::post('/create_order', 'Shared\Order@create')->name('create_order')->middleware('role:User,Admin,Client');
 Route::post('/add_document_order', 'Shared\Order@addDocuments')->name('add_document_order')->middleware('role:User,Admin');
 Route::post('/send_order_email', 'Shared\Order@send_order_email')->name('send_order_email')->middleware('role:User,Admin');
 Route::get('/uploaded_documents_list/{order_id}','Shared\Order@getAllDocumentsByOrder')->name('uploaded_documents_list')->middleware('role:User,Admin');
 Route::delete('/delete_document/{document_id}','Shared\Order@deleteDocument')->name('delete_document')->middleware('role:User,Admin');
+Route::post('add_user_order_request', 'Shared\Order@addOrderRequest')->name('add_user_order_request')->middleware('role:Client');
 Route::get('/current_user_edit_orders', 'Shared\Order@currentUserEditRequest')->name('currentUserEditRequest');
+
+// TITLE COMPANY (User and Admin)
+Route::get('title_company', 'Shared\Order@titleCompany')->name('titleCompany')->middleware('role:User,Admin');
+
 
 Route::post('/sendTestEmail', 'Shared\SendTestEmail@send_email')->name('sendTestEmail');
 Route::get('/shared/vendors', 'Shared\Vendor@index')->name('shared.vendors');

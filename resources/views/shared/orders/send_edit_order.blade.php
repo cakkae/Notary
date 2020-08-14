@@ -10,13 +10,12 @@
       </div>
       <div class="modal-body">
         <form>
-            {{ csrf_field() }}
             <div class="row">
                 <div class="col-md-12">
                     <label for="order_id">Order ID</label>
-                    <input type="text" disabled class="form-control request_edit_order_id">
+                    <input type="text" disabled class="form-control request_edit_order_id" name="order_id">
                    <label for="message" class="py-20">Message:</label>
-                   <textarea name="message" id="message" class="form-control" cols="30" rows="10"></textarea>
+                   <textarea name="message" id="message" class="form-control message" cols="30" rows="10"></textarea>
                 </div>
             </div>        
         </div>
@@ -42,46 +41,21 @@ $(document).ready(function () {
         $('.request_edit_order_id').val(order_id);
     });
 
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $('.sendEditOrderRequest').click(function (){
+        var order_id = $('.request_edit_order_id').val();
         var message = $('.message').val();
         $.ajax({
                 type:'POST',
-                url: "{{ route('create_order') }}",
+                url: "{{ route('add_user_order_request') }}",
                 data: {
                         order_id:order_id, 
-                        loan_id:loan_id, 
-                        file_id:file_id,
-                        property_location_street_name:property_location_street_name,
-                        property_location_additional_street_name:property_location_additional_street_name,
-                        property_location_city:property_location_city,
-                        property_location_state:property_location_state,
-                        property_location_zip:property_location_zip,
-                        close_location_street_name:close_location_street_name,
-                        close_location_additional_street_name:close_location_additional_street_name,
-                        close_location_city:close_location_city,
-                        close_location_state:close_location_state,
-                        close_location_zip:close_location_zip,
-                        borrower_name:borrower_name,
-                        borrower_middle_name:borrower_middle_name,
-                        borrower_last_name:borrower_last_name,
-                        borrower_email:borrower_email,
-                        coborrower_name:JSON.stringify(coborrower_name),
-                        coborrower_middle_name:JSON.stringify(coborrower_middle_name),
-                        coborrower_last_name:JSON.stringify(coborrower_last_name),
-                        contact_number_home:contact_number_home,
-                        contact_number_mobile:contact_number_mobile,
-                        contact_number_alt:contact_number_alt,
-                        closing_time_and_date:closing_time_and_date,
-                        closing_type:closing_type,
-                        closing_information_fax:closing_information_fax,
-                        closing_information_email:closing_information_email,
-                        closing_information_type_value:closing_information_type_value,
-                        lo_name:lo_name,
-                        lo_email:lo_email,
-                        lo_number:lo_number,
-                        internal_notes: internal_notes,
-                        special_instructions: special_instructions,
-                        created_by:created_by
+                        message: message
                     },
                 success: function(data) {
                     if($.isEmptyObject(data.error)){

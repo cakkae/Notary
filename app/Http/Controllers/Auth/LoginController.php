@@ -50,11 +50,11 @@ class LoginController extends Controller
         }
 
         if ( $user->hasRole('User') ) {
-            return redirect('/user');
+            return redirect('/orders');
         }
 
         if ( $user->hasRole('Client') ) {
-            return redirect('/user');
+            return redirect('/orders');
         }
 
         if ( $user->hasRole('Owner') ) {

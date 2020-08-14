@@ -2,6 +2,7 @@
 <div class="bg-light border-right" id="sidebar-wrapper">
       <div class="sidebar-heading">APPLICATION</div>
       <div class="list-group list-group-flush">
+
       @if(Auth::check() && Auth::user()->hasRole('Owner'))
         <a href="<?= url('owner'); ?>" class="{{ (request()->segment(2) == 'dashboard' || request()->segment(2) == '') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
           <div class="row">
@@ -57,7 +58,7 @@
       @endif
 
       @if(Auth::check() && Auth::user()->hasRole('Admin'))
-        <a href="<?= url('admin/dashboard'); ?>" class="{{ (request()->segment(2) == 'dashboard' || request()->segment(2) == '') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
+        <a href="<?= url('admin/dashboard'); ?>" class="{{ (request()->segment(2) == 'dashboard') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
           <div class="row">
             <div class="col-md-1">
               <i class="fal fa-tachometer-fast"></i>
@@ -67,7 +68,7 @@
             </div>
           </div> 
         </a>
-        <a href="<?= url('/user'); ?>" class="{{ (request()->segment(2) == 'order') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
+        <a href="<?= url('/orders'); ?>" class="{{ (request()->segment(2) == 'order') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
           <div class="row">
             <div class="col-md-1">
               <i class="fal fa-edit"></i>
@@ -77,7 +78,7 @@
             </div>
           </div> 
         </a>
-        <a href="<?= url('admin/dashboard'); ?>" class="{{ (request()->segment(2) == 'company') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
+        <a href="<?= url('title_company'); ?>" class="{{ (request()->segment(1) == 'title_company') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
           <div class="row">
             <div class="col-md-1">
               <i class="fal fa-building"></i>
@@ -149,6 +150,7 @@
         </a>
       </div>
       @endif
+
       @if(Auth::check() && Auth::user()->hasRole('Vendor'))
         <a href="<?= url('vendor/dashboard'); ?>" class="{{ (request()->segment(2) == 'dashboard' || request()->segment(2) == '') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
           <div class="row">
@@ -232,6 +234,7 @@
         </a>
       </div>
       @endif
+
       @if(Auth::check() && Auth::user()->hasRole('User'))
         <a href="<?= url('user/orders'); ?>" class="{{ (request()->segment(2) == 'orders' || request()->segment(2) == '') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
           <div class="row">
@@ -255,5 +258,30 @@
         </a>
       </div>
       @endif
+
+      @if(Auth::check() && Auth::user()->hasRole('Client'))
+        <a href="<?= url('user/orders'); ?>" class="{{ (request()->segment(2) == 'orders' || request()->segment(2) == '') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
+          <div class="row">
+            <div class="col-md-1">
+              <i class="fal fa-tachometer-fast"></i>
+            </div>
+            <div class="col-md-9">
+              Orders
+            </div>
+          </div> 
+        </a>
+        <a href="<?= url('user/settings'); ?>" class="{{ (request()->segment(2) == 'settings') ? 'active' : '' }} list-group-item list-group-item-action bg-light">
+          <div class="row">
+            <div class="col-md-1">
+              <i class="fal fa-user-cog"></i>
+            </div>
+            <div class="col-md-9">
+              Profile
+            </div>
+          </div> 
+        </a>
+      </div>
+      @endif
+
     </div>
     <!-- /#sidebar-wrapper -->

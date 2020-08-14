@@ -242,6 +242,18 @@ class CreateUsersTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('user_order_request', function (Blueprint $table) {
+            $table->integer('order_id')->unsigned();
+            $table->foreign('order_id')->references('order_id')->on('order')->onDelete('cascade');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('company_id')->unsigned();
+            $table->foreign('company_id')->references('id')->on('company')->onDelete('cascade');
+            $table->text('message');
+            $table->enum('order_status',['0', '1', '2'])->default('0');
+            $table->timestamps();
+        });
+
     }
 
     /**

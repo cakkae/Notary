@@ -13,6 +13,7 @@ use Auth;
 use Mail;
 use App\Mail\SendMail;
 use App\Models\GeoData;
+use App\Models\OrderRequest;
 use App\Models\ProductType;
 use DB;
 
@@ -56,9 +57,40 @@ class Order extends Controller
         return view('shared.orders.index', ['productTypes' => $productTypes, 'isClient' => $isClient, 'orders' => $orders, 'clients' => $clients, 'lastOrder' => $lastOrder, 'states' => $states, 'vendors' => $vendors]);
     }
 
+    public function editOrder(Request $request)
+    {   
+        $lastOrder = \App\Models\Order::latest()->first();
+        $states = GeoData::select('state', 'state_id')->distinct()->get();
+        $order = \App\Models\Order::where('order_id', $request->order_id)->first();
+        $vendors = DB::table('users')
+                    ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+                    ->where('user_roles.role_id','2')
+                    ->get();
+
+        $clients = DB::table('users')
+                    ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+                    ->select('users.*', 'user_roles.*')
+                    ->where('user_roles.role_id', '5')
+                    ->get();
+        
+        $user = $request->user();
+        $isClient = $user->hasRole('Client');
+        
+        $productTypes = ProductType::all();
+
+        return view('shared.orders.edit', ['productTypes' => $productTypes, 'isClient' => $isClient, 'order' => $order, 'clients' => $clients, 'lastOrder' => $lastOrder, 'states' => $states, 'vendors' => $vendors]);
+    }
+
     public function currentUserEditRequest()
     {
-        return view('shared.orders.current_edit');
+        $allRequestOrder = OrderRequest::where('user_id', Auth::user()->id)->where('order_status', '0')->get();
+        return view('shared.orders.current_edit', ['allRequestOrder' => $allRequestOrder]);
+    }
+
+    public function titleCompany()
+    {
+        $allRequestOrder = OrderRequest::where('company_id', Auth::user()->company_id)->where('order_status', '0')->get();
+        return view('shared.orders.title_company', ['allRequestOrder' => $allRequestOrder]);
     }
 
     public function addDocuments(Request $request) {
@@ -114,8 +146,33 @@ class Order extends Controller
        } catch (Exception $e) {
             return response()->json(['error'=> 'Error while sending email']);
        }
+    }
 
-        
+    
+    public function addOrderRequest(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'order_id' => 'required',
+            'message' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error'=> $validator->errors()->first()]);
+        }
+
+        try {
+
+            $orderRequest = new OrderRequest();
+            $orderRequest->order_id = $request->order_id;
+            $orderRequest->user_id = Auth::user()->id;
+            $orderRequest->company_id = Auth::user()->company_id;
+            $orderRequest->message = $request->message;
+            $orderRequest->save();
+
+            return response()->json(['success'=>'Request for order '. $request->order_id .' successfull created.']);
+       } catch (Exception $e) {
+            return response()->json(['error'=> 'BLA']);
+       }
     }
 
     public function create(Request $request) {
