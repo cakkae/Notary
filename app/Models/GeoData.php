@@ -8,4 +8,5 @@ class GeoData extends Model
 {
     protected $guarded = [];
     protected $table = 'geodata';
+    public $timestamps = false;
 }

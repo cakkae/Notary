@@ -187,7 +187,7 @@ class CreateUsersTable extends Migration
             $table->string('close_location_state');
             $table->string('close_location_zip');
             $table->string('borrower_name');
-            $table->string('borrower_middle_name');
+            $table->string('borrower_middle_name')->nullable();
             $table->string('borrower_last_name');
             $table->string('borrower_email');
             $table->text('coborrower_name')->nullable();
