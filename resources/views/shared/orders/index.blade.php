@@ -79,6 +79,7 @@
                                             data-lo_number = "{{ $order->lo_number }}"
                                             data-lo_email = "{{ $order->lo_email }}"
                                             data-internal_notes = "{{ $order->internal_notes }}"
+                                            data-fax_select = "{{ $order->fax_select }}"
                                             data-special_instructions = "{{ $order->special_instructions }}"
                                             data-status = "{{ $order->status }}"
                                          ><i class="fas fa-edit"></button></td>
@@ -318,6 +319,7 @@ function validate(formData, jqForm, options) {
             var lo_name = $(this).data("lo_name");
             var lo_number = $(this).data("lo_number");
             var lo_email = $(this).data("lo_email");
+            var fax_select = $(this).data("fax_select");
             var internal_notes = $(this).data("internal_notes");
             var special_instructions = $(this).data("special_instructions");
             var status = $(this).data("status");
@@ -360,9 +362,27 @@ function validate(formData, jqForm, options) {
             $('.edit_lo_name').val(lo_name);
             $('.edit_lo_number').val(lo_number);
             $('.edit_lo_email').val(lo_email);
-            $('.edit_internal_notes').val(internal_notes);
-            $('.edit_special_instructions').val(special_instructions);
+            var fax_select = $('.edit_fax_select').val(fax_select);
+            var internal_notes = $('.edit_internal_notes').text(internal_notes);
+            var special_instructions = $('.edit_special_instructions').text(special_instructions);
             $('.edit_status').val(status);
+
+            if(fax_select) {
+                $('.fax_number').removeClass('hide').addClass('show');
+                $('.email').removeClass('hide').addClass('show');
+            }
+            var order_date = closing_time_and_date.substr(0,closing_time_and_date.indexOf(' ')); 
+            var order_time = closing_time_and_date.substr(closing_time_and_date.indexOf(' ')+1); 
+            $(".edit_closing_time_and_date").val(order_date+"T"+order_time);
+
+            if(closing_type == 5) {
+                $('.specify_other').removeClass('hide').addClass('show');
+            }
+
+            if(internal_notes !== '')
+                $('.edit_lo_info').prop('checked', true);
+            if(special_instructions !== '')
+                $('.edit_notary_info').prop('checked', true);
 
         });
 
@@ -469,8 +489,8 @@ function validate(formData, jqForm, options) {
             var lo_email = $("input[name='lo_email']").val();
             var lo_number = $("input[name='lo_number']").val();
             var created_by = $("input[name='created_by']").val();
-            var internal_notes = $("input[name='internal_notes']").val();
-            var special_instructions = $("input[name='special_instructions']").val();
+            var internal_notes = $("textarea[name='internal_notes']").val();
+            var special_instructions = $("textarea[name='special_instructions']").val();
             $.ajax({
                 type:'POST',
                 url: "{{ route('create_order') }}",
@@ -506,6 +526,7 @@ function validate(formData, jqForm, options) {
                         lo_name:lo_name,
                         lo_email:lo_email,
                         lo_number:lo_number,
+                        fax_select: fax_select,
                         internal_notes: internal_notes,
                         special_instructions: special_instructions,
                         created_by:created_by
@@ -593,7 +614,7 @@ function validate(formData, jqForm, options) {
             $(this).closest('tr').remove();
         });
 
-        $('.fax_select').on('change', function() {
+        $('.fax_select, .edit_fax_select').on('change', function() {
             var selected_value = $(this).val();
             if(selected_value == 1) {
                 $('.fax_number').removeClass('hide').addClass('show');
@@ -601,17 +622,34 @@ function validate(formData, jqForm, options) {
             }
             else {
                 $('.email').removeClass('show').addClass('hide');
+                $('.email').val("");
                 $('.fax_number').removeClass('show').addClass('hide');
+                $('.fax_number').val("");
             }
-                
         });
 
-        $('.closing_type').on('change', function() {
+        /*$('.edit_fax_select').on('change', function() {
+            var selected_value = $(this).val();
+            if(selected_value == 1) {
+                $('.fax_number').removeClass('hide').addClass('show');
+                $('.email').removeClass('hide').addClass('show');
+            }
+            else {
+                $('.email').removeClass('show').addClass('hide');
+                $('.email').val() = "";
+                $('.fax_number').removeClass('show').addClass('hide');
+                $('.fax_number').val() = "";
+            }
+        });*/
+
+        $('.closing_type, .edit_closing_type').on('change', function() {
             var selected_value = $(this).val();
             if(selected_value == 5) 
                 $('.specify_other').removeClass('hide').addClass('show');
-            else 
+            else  {
                 $('.specify_other').removeClass('show').addClass('hide');
+                $('.specify_other').val("");
+            }
         });
 
         $('#notary_list').DataTable({

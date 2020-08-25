@@ -53,7 +53,7 @@
                                         <th>Show Details</th>
                                     </tr>
                                     <tbody>
-                                        @foreach($vendors as $vendor)
+                                        @forelse($vendors as $vendor)
                                         <tr>
                                             <td style="text-align: center;"><i class="fal fa-inbox-out fa-2x"></i></td>
                                             <td>{{ $vendor->name }}</td>
@@ -79,7 +79,11 @@
                                                 data-vendor_first_name="{{ $vendor->name }}">NOTARY DETAILS</button>
                                             </td>
                                         </tr>
-                                        @endforeach
+                                        @empty
+                                        <tr>
+                                            <td colspan="8" class="text-center"><h2>No result</h2></td>
+                                        </tr>
+                                        @endforelse
                                     </tbody>  
                                 </table>
                             </div>
@@ -332,7 +336,7 @@
             <button type="button" class="btn btn-danger btn-lg btn-block" data-dismiss="modal">Close</button>
         </div>
         <div class="col-md-3">
-            <button type="button" class="btn btn-primary btn-lg btn-block create_order">Create Order</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block create_order">Update Order</button>
         </div>
       </div>
       </form>

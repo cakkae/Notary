@@ -171,7 +171,7 @@ class Order extends Controller
 
             return response()->json(['success'=>'Request for order '. $request->order_id .' successfull created.']);
        } catch (Exception $e) {
-            return response()->json(['error'=> 'BLA']);
+            return response()->json(['error'=> $e->getMessage()]);
        }
     }
 
@@ -210,7 +210,7 @@ class Order extends Controller
             $order = \App\Models\Order::create($input);
             return response()->json(['success'=>'Order successfull created.']);
        } catch (Exception $e) {
-            return response()->json(['error'=> 'BLA']);
+            return response()->json(['error'=> $e->getMessage()]);
        }
 
     }

@@ -239,13 +239,10 @@
                         <div class="col-md-6 py-20">
                             <label>Closing type</label>
                             <select name="closing_type" class="form-control edit_closing_type">
-                                <option selected disabled>Please choose...</option>
-                                <option value="0">Application</option>
-                                <option value="1">Deed Only</option>
-                                <option value="2">Purchase</option>
-                                <option value="3">Refinance</option>
-                                <option value="4">Reverse</option>
-                                <option value="5">Other</option>
+                                <option value="" disabled selected>Select product type</option>
+                                @foreach($productTypes as $productType) 
+                                    <option value="{{ $productType->id }}">{{ $productType->name }}  </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-md-6 py-20">
