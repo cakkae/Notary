@@ -55,7 +55,7 @@
                                     <tbody>
                                         @forelse($vendors as $vendor)
                                         <tr>
-                                            <td style="text-align: center;"><i class="fal fa-inbox-out fa-2x"></i></td>
+                                            <td style="text-align: center;" class="notaryAvailability" data-email="{{ $vendor->email }}"><i class="fal fa-inbox-out fa-2x"></i></td>
                                             <td>{{ $vendor->name }}</td>
                                             <td>{{ $vendor->lastName }}</td>
                                             <td>{{ $vendor->email }}</td>
@@ -336,7 +336,7 @@
             <button type="button" class="btn btn-danger btn-lg btn-block" data-dismiss="modal">Close</button>
         </div>
         <div class="col-md-3">
-            <button type="button" class="btn btn-primary btn-lg btn-block create_order">Update Order</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block create_order">UPDATE ORDER</button>
         </div>
       </div>
       </form>

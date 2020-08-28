@@ -287,6 +287,10 @@ function validate(formData, jqForm, options) {
 
         });
 
+        $('.notaryAvailability').click(function() {
+            alert($(this).data('email'));
+        });
+
         $('.editOrder').click(function() {
             var id = $(this).data("id");
             var loan = $(this).data("loan");
@@ -643,8 +647,9 @@ function validate(formData, jqForm, options) {
         });*/
 
         $('.closing_type, .edit_closing_type').on('change', function() {
-            var selected_value = $(this).val();
-            if(selected_value == 5) 
+            var selected_value = $(this).find(":selected").text();
+            console.log($.trim(selected_value));
+            if($.trim(selected_value) === "Other") 
                 $('.specify_other').removeClass('hide').addClass('show');
             else  {
                 $('.specify_other').removeClass('show').addClass('hide');

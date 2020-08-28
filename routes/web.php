@@ -33,6 +33,9 @@ Route::namespace('Admin')->group(function () {
         Route::get('/clients', 'Users@clients')->name('client.index');
         Route::get('/clients/create', 'Users@create')->name('client.create');
         Route::post('/clients/store', 'Users@store')->name('client.store');
+        Route::get('/notary', 'Notary@notaries')->name('notary.index');
+        Route::get('/notary/create', 'Notary@create')->name('notary.create');
+        Route::post('/notary/store', 'Notary@store')->name('notary.store');
         Route::get('/orders', 'Users@index');
         Route::get('/reports', 'Reports@index');
         Route::get('/settings', 'Settings@index');

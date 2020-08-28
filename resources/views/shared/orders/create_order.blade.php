@@ -174,9 +174,9 @@
                         <div class="col-md-12 py-20">
                         <label>Client</label>
                         <select class="form-control" name="close_location_state" id="close_location_state" <?php if($isClient) echo "disabled";?>>
-                            <option value="" disabled selected>Select client</option>
+                            <option value="" disabled>Select client</option>
                             @foreach($clients as $client) 
-                                <option value="{{ $client->id }}" <?php if($isClient && Auth::user()->id == $client->id) echo "selected";?>>{{ $client->name.' '.$client->lastName }}  </option>
+                                <option value="{{ $client->id }}" <?php if($isClient && Auth::user()->id == $client->id) echo "selected";?>>{{ $client->name.' '.$client->lastName.' ('.\App\Models\Company::where('id', $client->company_id)->get()->pluck('company_name')->first().')' }}  </option>
                             @endforeach
                         </select>
                         </div>
