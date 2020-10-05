@@ -24,11 +24,44 @@ class Users extends Controller
             ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
             ->select('users.*', 'user_roles.*')
             ->where('user_roles.role_id', '5')
+            ->where('users.status','1')
             ->get();
         } catch (Exception $ex) {
 
         }
         return view('admin.clients.index', ['clients' => $clients]);
+    }
+
+    public function updateClientPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:8'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error'=> $validator->errors()->first()]);
+        }
+
+        try {
+            $user = User::find($request->client_id);
+            $user->password = Hash::make($request->password);
+            $user->save();
+            return response()->json(['success'=>'Password successfully changed.']);
+        } catch (Exception $e) {
+            return response()->json(['error'=> $e.getMessage()]);
+        }
+    }
+
+    public function deleteClient($user_id)
+    {
+        try {
+            $user = User::find($user_id);
+            $user->status = '0';
+            $user->save();
+            return back();
+        }catch (Exception $e) {
+            return response()->json(['error'=> $e.getMessage()]);
+        }
     }
 
     public function store(Request $request)

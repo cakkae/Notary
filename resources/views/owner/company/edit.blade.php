@@ -134,7 +134,7 @@
                                                     Edit
                                                 </a>/
                                                 <a href="{{ route('deleteUser', $user->id) }}">Remove</a>
-                                                </td>
+                                            </td>
                                         </tr>
                                         @empty
                                         <tr>
