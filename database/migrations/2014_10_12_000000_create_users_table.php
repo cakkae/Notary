@@ -52,6 +52,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->text('coverage')->nullable();
+            $table->enum('status',['0', '1'])->default('1');
             $table->rememberToken();
             $table->timestamps();
         });
@@ -138,7 +139,8 @@ class CreateUsersTable extends Migration
             $table->string('state_abbr');
             $table->string('zipcode');
             $table->string('country');
-            $table->string('city');
+            $table->string('city')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('pricing', function (Blueprint $table) {

@@ -8,6 +8,7 @@ use App\User;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use DB;
+use Auth;
 
 class Company extends Controller
 {
@@ -155,11 +156,76 @@ class Company extends Controller
     {
         $company = \App\Models\Company::findOrFail($id);
         try {
-            $users = User::where('company_id', $id)->paginate(10);
+            $users = User::where('company_id', $id)->where('status', '1')->paginate(10);
         } catch (Exception $ex) {
 
         }
         return view('owner.company.edit', ['company' => $company, 'users' => $users]);
+    }
+
+    public function deleteUser($user_id)
+    {
+        try {
+            $user = User::find($user_id);
+            $user->status = '0';
+            $user->save();
+            return back();
+        }catch (Exception $e) {
+            return response()->json(['error'=> $e.getMessage()]);
+        }
+    }
+
+    public function updateRole(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'role_id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error'=> $validator->errors()->first()]);
+        }
+
+        try {
+                DB::table('user_roles')
+                    ->where('user_id', $request->user_id)
+                    ->update(['role_id' => $request->role_id]);
+            return response()->json(['success'=>'Permissions successfully updated.']);
+        } catch (Exception $e) {
+            return response()->json(['error'=> $e.getMessage()]);
+        }
+    }
+
+    public function updateUser(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'lastName' => 'required',
+            'phone' => 'required|numeric',
+            'role_id' => 'required',
+            'email' => 'required|email|max:255|unique:users,email,'.$request->user_id.',id' 
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error'=> $validator->errors()->first()]);
+        }
+
+        try {
+            User::where('id', $request->company_id)->update(
+                array(
+                    'name' => $request->name,
+                    'lastName' => $request->lastName,
+                    'phone' => $request->phone,
+                    'email' => $request->email,
+                    'middleName' => $request->middleName,
+                    'company_id' => $request->company_id
+                ));
+                DB::table('user_roles')
+                    ->where('user_id', $request->user_id)
+                    ->update(['role_id' => $request->role_id]);
+            return response()->json(['success'=>'User details successfully updated.']);
+        } catch (Exception $e) {
+            return response()->json(['error'=> $e.getMessage()]);
+        }
     }
 
     /**

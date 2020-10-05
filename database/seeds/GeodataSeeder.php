@@ -2,23 +2,22 @@
 
 use Illuminate\Database\Seeder;
 use \App\Models\GeoData;
+use JeroenZwart\CsvSeeder\CsvSeeder;
 
-class GeodataSeeder extends Seeder
+class GeodataSeeder extends CsvSeeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+    public function __construct()
+    {
+        $this->file = '/database/seeds/CSV/geo-data.csv';
+        $this->delimiter = ",";
+        $this->mapping = ['state_id', 'state', 'state_abbr', 'zipcode', 'country', 'city'];
+        $this->header = FALSE;
+        $this->tablename = 'geodata';
+    }
+
     public function run()
     {
-        $geodata = new GeoData;
-        $geodata->state_id = 1;
-        $geodata->state = "Alabama";
-        $geodata->state_abbr = "AL";
-        $geodata->zipcode = 35004;
-        $geodata->country = "St. Clair";
-        $geodata->city = "Acmar";
-        $geodata->save();
+        DB::disableQueryLog();
+        parent::run();
     }
 }

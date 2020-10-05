@@ -55,8 +55,11 @@ Route::namespace('Owner')->group(function () {
         Route::post('/update_company_fee', 'Company@updateFee')->name('update_company_fee')->middleware('role:Owner');
         Route::post('/update_company_account', 'Company@updateAccount')->name('update_company_account')->middleware('role:Owner');
         Route::post('/create_user', 'Company@createUser')->name('create_user')->middleware('role:Owner');
+        Route::post('/update_user', 'Company@updateUser')->name('update_user')->middleware('role:Owner');
+        Route::post('/update_role', 'Company@updateRole')->name('update_role')->middleware('role:Owner');
         Route::post('/update_organization_info', 'Settings@updateOrganization')->name('update_organization_info')->middleware('role:Owner');
         Route::resource('company', 'Company')->middleware('role:Owner');
+        Route::get('/deleteUser/{user_id}', 'Company@deleteUser')->name('deleteUser');
         Route::post('/add_super_admin', 'Company@createSuperAdmin')->name('add_super_admin')->middleware('role:Owner');
     });
 });

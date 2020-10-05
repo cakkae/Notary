@@ -102,7 +102,7 @@
                                         <th>#</th>
                                         <th>Users</th>
                                         <th>UserName</th>
-                                        <th>Password</th>
+                                        <th>Role</th>
                                         <th>Permissions</th>
                                         <th>Action</th>
                                     </thead>
@@ -110,11 +110,31 @@
                                         @forelse($users as $key => $user)
                                         <tr>
                                             <td>{{ ++$key }}</td>
-                                            <td>{{ $user->name.' '.$user->surname }}</td>
+                                            <td>{{ $user->name.' '.$user->lastName }}</td>
                                             <td>{{ $user->email }}</td>   
                                             <td>{{ $user->roles->first()['name'] }}</td>
-                                            <td><a href="#">Set</a>/<a href="#">Reset</a></td>
-                                            <td><a href="#">Edit</a>/<a href="#">Remove</a></td>
+                                            <td>
+                                                <a href="javascript::void()"
+                                                    class="editRoleButton"
+                                                    data-user_id = "{{ $user->id }}">
+                                                    Set
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="javascript::void()" 
+                                                    class="editUserButton"
+                                                    data-user_id="{{ $user->id }}"
+                                                    data-name="{{ $user->name }}"
+                                                    data-lastName="{{ $user->lastName }}"
+                                                    data-email="{{ $user->email }}"
+                                                    data-middlename="{{ $user->middlename }}"
+                                                    data-phone="{{ $user->phone }}"
+                                                    data-permission="{{ $user->roles->first()['pivot']['role_id'] }}"
+                                                    >
+                                                    Edit
+                                                </a>/
+                                                <a href="{{ route('deleteUser', $user->id) }}">Remove</a>
+                                                </td>
                                         </tr>
                                         @empty
                                         <tr>
@@ -183,6 +203,122 @@
         </div>
     </div>
 </div>
+
+<!-- BEGIN: EDIT ROLE MODAL -->
+<div class="modal fade editRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form>
+      <div class="modal-body userForm">
+        <input type="hidden" class="user_id" name="user_id">
+        <div class="row">
+            <div class="col-md-12 py-20">
+                <label>
+                    Permision:
+                </label>
+                <select class="form-control edit_permission" name="permision">
+                    <option value="1">User</option>
+                    <option value="2">Vendor</option>
+                    <option value="3">Admin</option>
+                </select>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-3">
+            <button type="button" class="btn btn-danger btn-lg btn-block" data-dismiss="modal">CLOSE</button>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary btn-lg btn-block updateRoleUser">UPDATE</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- END: EDIT ROLE MODAL -->
+
+<!-- BEGIN: EDIT USER MODAL -->
+<div class="modal fade editUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form>
+      <div class="modal-body userForm">
+        <input type="hidden" class="user_id" name="user_id">
+        <div class="row">
+            <div class="col-md-6">
+                <label>
+                    Name:
+                </label>
+                <input type="text" class="form-control edit_name" name="username_name" placeholder="Enter name...">
+            </div>
+            <div class="col-md-6">
+                <label>
+                    Surname:
+                </label>
+                <input type="text" class="form-control edit_lastName" name="lastName" placeholder="Enter surname...">
+            </div>
+            <div class="col-md-6 py-20">
+                <label>
+                    Email:
+                </label>
+                <input type="email" class="form-control edit_email" name="email" placeholder="Enter email...">
+            </div>
+            <div class="col-md-6 py-20">
+                <label>
+                    Middlename:
+                </label>
+                <input type="text" class="form-control edit_middlename" name="middlename" placeholder="Enter middlename...">
+            </div>
+            <div class="col-md-6 py-20">
+                <label>
+                    Phone:
+                </label>
+                <input type="text" class="form-control edit_phone" name="phone" placeholder="Enter phone number...">
+            </div>
+            <div class="col-md-6 py-20">
+                <label>
+                    Permision:
+                </label>
+                <select class="form-control edit_permission" name="permision">
+                    <option value="1">User</option>
+                    <option value="2">Vendor</option>
+                    <option value="3">Admin</option>
+                </select>
+            </div>
+            <div class="col-md-6 py-20">
+                <label>
+                    Company:
+                </label>
+                <input type="text" class="form-control" value="{{ \App\Models\Company::find(1)->company_name }}" disabled>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-3">
+            <button type="button" class="btn btn-danger btn-lg btn-block" data-dismiss="modal">CLOSE</button>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary btn-lg btn-block updateCurrentUser">UPDATE</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- END: EDIT USER MODAL -->
 
 <!-- Modal -->
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -276,6 +412,98 @@ $(document).ready(function($){
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
+    });
+
+    $('.editUserButton').on('click', function () {
+        
+        var name = $(this).data('name');
+        var lastName = $(this).data('lastName');
+        var email = $(this).data('email');
+        var middlename = $(this).data('middlename');
+        var phone = $(this).data('phone');
+        var permission = $(this).data('permission');
+        var user_id = $(this).data('user_id');
+
+        $('.editUserModal .userForm .edit_name').val(name);
+        $('.editUserModal .userForm .edit_lastName').val(lastName);
+        $('.editUserModal .userForm .edit_email').val(email);
+        $('.editUserModal .userForm .edit_middlename').val(middlename);
+        $('.editUserModal .userForm .edit_phone').val(phone);
+        $('.editUserModal .userForm .edit_permission').val(permission);
+        $('.editUserModal .userForm .user_id').val(user_id);
+
+        jQuery('.editUserModal').modal("show");
+    });
+
+    $('.editRoleButton').on('click', function () {
+        
+        var user_id = $(this).data('user_id');
+
+        $('.editRoleModal .userForm .user_id').val(user_id);
+
+        jQuery('.editRoleModal').modal("show");
+    });
+    
+    $('.updateRoleUser').on('click', function () {
+        var user_id = $('.userForm .user_id').val();
+        var role_id = $( ".userForm .edit_permission option:selected" ).val();
+
+        $.ajax({
+                type:'POST',
+                url: "{{ route('update_role') }}",
+                data: {
+                        role_id:role_id,
+                        user_id: user_id
+                    },
+                success: function(data) {
+                    if($.isEmptyObject(data.error)){
+                        toastr.success(data.success);
+                        window.location.reload();
+                    }else{
+                        toastr.error(data.error);
+                    }
+                },
+                error: function(jqXHR, textStatus, error) { 
+                    
+                }
+        });
+    });
+
+    $('.updateCurrentUser').on('click', function() {
+        var name = $('.userForm .edit_name').val();
+        var lastName = $('.userForm .edit_lastName').val();
+        var middleName = $('.userForm .edit_middlename').val();
+        var phone = $('.userForm .edit_phone').val();
+        var email = $('.userForm .edit_email').val();
+        var role_id = $( ".userForm .edit_permission option:selected" ).val();
+        var company_id = $('input[name="company_id"]').val();
+        var user_id = $('.userForm .user_id').val();
+
+        $.ajax({
+                type:'POST',
+                url: "{{ route('update_user') }}",
+                data: {
+                        name:name, 
+                        lastName:lastName,
+                        middleName:middleName,
+                        phone:phone,
+                        email:email,
+                        role_id:role_id,
+                        user_id: user_id,
+                        company_id:company_id
+                    },
+                success: function(data) {
+                    if($.isEmptyObject(data.error)){
+                        toastr.success(data.success);
+                        window.location.reload();
+                    }else{
+                        toastr.error(data.error);
+                    }
+                },
+                error: function(jqXHR, textStatus, error) { 
+                    
+                }
+        });
     });
 
     $('.createNewUser').on('click', function() {
