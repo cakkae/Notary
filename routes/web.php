@@ -53,6 +53,8 @@ Route::namespace('Owner')->group(function () {
     {
         Route::get('/', 'Dashboard@index')->middleware('role:Owner');
         Route::get('/accouting', 'Accouting@index')->middleware('role:Owner');
+        Route::post('/update_superadmin_password', 'Settings@updateSuperAdmin')->name('update_superadmin_password')->middleware('role:Owner');
+        Route::get('/deleteSuperAdmin/{user_id}', 'Settings@deleteSuperAdmin')->name('deleteSuperAdmin')->middleware('role:Owner');
         Route::get('/settings', 'Settings@index')->name('settings')->middleware('role:Owner');
         Route::post('/update_company_fee', 'Company@updateFee')->name('update_company_fee')->middleware('role:Owner');
         Route::post('/update_company_account', 'Company@updateAccount')->name('update_company_account')->middleware('role:Owner');
@@ -94,6 +96,7 @@ Route::namespace('Vendor')->group(function () {
 Route::get('/orders/{order_id}','Shared\Order@editOrder')->name('shared.orders.edit')->middleware('role:User,Admin');
 Route::get('/orders', 'Shared\Order@index')->name('shared.orders')->middleware('role:User,Admin,Client,Owner');
 Route::post('/create_order', 'Shared\Order@create')->name('create_order')->middleware('role:User,Admin,Client');
+Route::post('/update_order', 'Shared\Order@update')->name('update_order')->middleware('role:User,Admin');
 Route::post('/add_document_order', 'Shared\Order@addDocuments')->name('add_document_order')->middleware('role:User,Admin,Client');
 Route::post('/send_order_email', 'Shared\Order@send_order_email')->name('send_order_email')->middleware('role:User,Admin');
 Route::get('/uploaded_documents_list/{order_id}','Shared\Order@getAllDocumentsByOrder')->name('uploaded_documents_list')->middleware('role:User,Admin,Client');

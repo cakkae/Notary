@@ -17,10 +17,10 @@ if(! function_exists('is_active')) {
   function is_active($value){
     switch($value){
       case 0:
-       return '<span style="color: red; font-weight: bold;">NE</span>';
+       return '<span style="color: red; font-weight: bold;">No</span>';
        break;
       case 1:
-       return '<span style="color: #343a40; font-weight: bold;">DA</span>';
+       return '<span style="color: #343a40; font-weight: bold;">Yes</span>';
        break;
     }
   }
@@ -44,7 +44,7 @@ if(! function_exists('show_role')) {
   function show_role($value){
     switch($value){
       case 1:
-       return 'Radnik';
+       return 'Employeer';
        break;
       case 2:
        return 'Administrator';

@@ -72,8 +72,6 @@
 <script>
 $(document).ready(function ($){
 
-    $('.contact_number').mask('123-123-1234');
-
     $('.createNewCompany').on('click', function() {
         $.ajaxSetup({
             headers: {

@@ -198,7 +198,7 @@ class CreateUsersTable extends Migration
             $table->string('contact_number_home');
             $table->string('contact_number_mobile')->nullable();
             $table->string('contact_number_alt')->nullable();
-            $table->date('closing_time_and_date');
+            $table->datetime('closing_time_and_date');
             $table->integer('closing_type');
             $table->string('closing_information_type_value')->nullable();
             $table->string('closing_information_email')->nullable();

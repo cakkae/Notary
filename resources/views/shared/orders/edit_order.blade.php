@@ -20,7 +20,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Order #</span>
                                 </div>
-                                <input type="text" class="form-control edit_order_id" aria-label="Order#" name="order_id">
+                                <input type="text" readonly class="form-control edit_order_id" aria-label="Order#" name="edit_order_id">
                             </div>
                         </div>
                         <div class="col-md-4 py-20">
@@ -28,7 +28,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Loan #</span>
                                 </div>
-                                <input type="text" class="form-control edit_loan_id" aria-label="Loan#" name="loan_id">
+                                <input type="text" class="form-control edit_loan_id" aria-label="Loan#" name="edit_loan_id">
                             </div>
                         </div>
                         <div class="col-md-4 py-20">
@@ -36,7 +36,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">File #</span>
                                 </div>
-                                <input type="text" class="form-control edit_file_id" aria-label="File#" name="file_id">
+                                <input type="text" class="form-control edit_file_id" aria-label="File#" name="edit_file_id">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -93,61 +93,66 @@
                         </div>
                         <div class="col-md-6 py-20">
                             <label>Firstname:</label>
-                            <input type="text" class="form-control vendor_first_name" name="vendor_first_name">
+                            <input type="text" class="form-control vendor_first_name" name="edit_vendor_first_name">
                         </div>
                         <div class="col-md-6 py-20">
                             <label>Lastname:</label>
-                            <input type="text" class="form-control vendor_last_name" name="vendor_last_name">
+                            <input type="text" class="form-control vendor_last_name" name="edit_vendor_last_name">
                         </div>
                         <div class="col-md-12 py-20">
                             <label>Address:</label>
-                            <input type="text" class="form-control vendor_address" name="vendor_address">
+                            <input type="text" class="form-control vendor_address" name="edit_vendor_address">
                         </div>
                         <div class="col-md-4 py-20">
                             <label>City:</label>
-                            <input type="text" class="form-control vendor_city" name="vendor_city">
+                            <input type="text" class="form-control vendor_city" name="edit_vendor_city">
                         </div>
                         <div class="col-md-4 py-20">
                             <label>State:</label>
-                            <input type="text" class="form-control vendor_state" name="vendor_state">
+                            <input type="text" class="form-control vendor_state" name="edit_vendor_state">
                         </div>
                         <div class="col-md-4 py-20">
                             <label>Zip Code:</label>
-                            <input type="text" class="form-control vendor_zip_code" name="vendor_zip_code">
+                            <input type="text" class="form-control vendor_zip_code" name="edit_vendor_zip_code">
                         </div>
                         <div class="col-md-4 py-20">
                             <label>Phone number:</label>
-                            <input type="text" class="form-control vendor_phone_number" name="vendor_phone_number">
+                            <input type="text" class="form-control vendor_phone_number" name="edit_vendor_phone_number">
                         </div>
                         <div class="col-md-4 py-20">
                             <label>Email Address:</label>
-                            <input type="text" class="form-control vendor_email" name="vendor_email">
+                            <input type="text" class="form-control vendor_email" name="edit_vendor_email">
                         </div>
                         <div class="col-md-4 py-20">
                             <label>Fee:</label>
-                            <input type="text" class="form-control vendor_fee" name="vendor_fee">
+                            <input type="text" class="form-control vendor_fee" name="edit_vendor_fee">
                         </div>
                         <div class="col-md-12 py-20">
                             <label>Additional Service Fee:</label>
-                            <input type="text" class="form-control vendor_additional_service_fee" name="vendor_additional_service_fee">
+                            <input type="text" class="form-control vendor_additional_service_fee" name="edit_vendor_additional_service_fee">
                         </div>
                         <div class="col-md-6 py-20">
                             <label>Property Location</label>
                             <div class="row">
                                 <div class="col-md-12 py-20">
-                                    <input type="text" class="form-control edit_property_location_street_name" name="property_location_street_name" placeholder="Street name">
+                                    <input type="text" class="form-control edit_property_location_street_name" name="edit_property_location_street_name" placeholder="Street name">
                                 </div>
                                 <div class="col-md-12 py-20">
-                                    <input type="text" class="form-control edit_property_location_additional_street_name" name="property_location_additional_street_name" placeholder="Additional Street name">
+                                    <input type="text" class="form-control edit_property_location_additional_street_name" name="edit_property_location_additional_street_name" placeholder="Additional Street name">
                                 </div>
                                 <div class="col-md-4 py-20">
-                                    <input type="text" class="form-control edit_property_location_city" name="property_location_city" placeholder="City">
+                                    <input type="text" class="form-control edit_property_location_city" name="edit_property_location_city" placeholder="City">
                                 </div>
                                 <div class="col-md-4 py-20">
-                                    <input type="text" class="form-control edit_property_location_state" name="property_location_state" placeholder="State">
+                                    <select class="form-control" name="edit_property_location_state" id="edit_property_location_state">
+                                        <option value="">Select state</option>
+                                            @foreach($states as $state) 
+                                                <option value="{{ $state->state_id }}">{{ $state->state }}  </option>
+                                            @endforeach
+                                    </select>
                                 </div>
                                 <div class="col-md-4 py-20">
-                                    <input type="text" class="form-control edit_property_location_zip" name="property_location_zip" placeholder="Zip">
+                                    <input type="text" class="form-control edit_property_location_zip" name="edit_property_location_zip" placeholder="Zip">
                                 </div>
                             </div>
                         </div>
@@ -155,19 +160,25 @@
                         <label>Close Location</label>
                             <div class="row">
                                 <div class="col-md-12 py-20">
-                                    <input type="text" class="form-control edit_close_location_street_name" name="close_location_street_name" placeholder="Street name">
+                                    <input type="text" class="form-control edit_close_location_street_name" name="edit_close_location_street_name" placeholder="Street name">
                                 </div>
                                 <div class="col-md-12 py-20">
-                                    <input type="text" class="form-control edit_close_location_additional_street_name" name="close_location_additional_street_name" placeholder="Additional Street name">
+                                    <input type="text" class="form-control edit_close_location_additional_street_name" name="edit_close_location_additional_street_name" placeholder="Additional Street name">
                                 </div>
                                 <div class="col-md-4 py-20">
-                                    <input type="text" class="form-control edit_close_location_city" name="close_location_city" placeholder="City">
+                                    <input type="text" class="form-control edit_close_location_city" name="edit_close_location_city" placeholder="City">
                                 </div>
                                 <div class="col-md-4 py-20">
-                                    <input type="text" class="form-control edit_close_location_state" name="close_location_state" placeholder="State">
+                                    <select class="form-control" name="edit_close_location_state" id="edit_close_location_state">
+                                        <option value="">Select state</option>
+                                            @foreach($states as $state) 
+                                                <option value="{{ $state->state_id }}">{{ $state->state }}  </option>
+                                            @endforeach
+                                    </select>
+                                    <input type="text" class="form-control edit_close_location_state" name="edit_close_location_state" placeholder="State">
                                 </div>
                                 <div class="col-md-4 py-20">
-                                    <input type="text" class="form-control edit_close_location_zip" name="close_location_zip" placeholder="Zip">
+                                    <input type="text" class="form-control edit_close_location_zip" name="edit_close_location_zip" placeholder="Zip">
                                 </div>
                             </div>
                         </div>
@@ -175,16 +186,16 @@
                             <label>Borrower Name</label>
                             <div class="row">
                                 <div class="col-md-4 py-20">
-                                    <input type="text" class="form-control edit_borrower_name" name="borrower_name" placeholder="First name">
+                                    <input type="text" class="form-control edit_borrower_name" name="edit_borrower_name" placeholder="First name">
                                 </div>
                                 <div class="col-md-4 py-20">
-                                    <input type="text" class="form-control edit_borrower_middle_name" name="borrower_middle_name" placeholder="Middle name">
+                                    <input type="text" class="form-control edit_borrower_middle_name" name="edit_borrower_middle_name" placeholder="Middle name">
                                 </div>
                                 <div class="col-md-4 py-20">
-                                    <input type="text" class="form-control edit_borrower_last_name" name="borrower_last_name" placeholder="Last Name">
+                                    <input type="text" class="form-control edit_borrower_last_name" name="edit_borrower_last_name" placeholder="Last Name">
                                 </div>
                                 <div class="col-md-12 py-20">
-                                    <input type="email" class="form-control edit_borrower_email" name="borrower_email" placeholder="Email">
+                                    <input type="email" class="form-control edit_borrower_email" name="edit_borrower_email" placeholder="Email">
                                 </div>
                             </div>
                         </div>
@@ -206,9 +217,9 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="text" name="coborrower_name[]" class="form-control coborrower_name" /></td>
-                                    <td><input type="text" name="coborrower_middle_name[]" class="form-control coborrower_middle_name" /></td>
-                                    <td><input type="text" name="coborrower_last_name[]" class="form-control coborrower_last_name" /></td>
+                                    <td><input type="text" name="edit_coborrower_name[]" class="form-control coborrower_name" /></td>
+                                    <td><input type="text" name="edit_coborrower_middle_name[]" class="form-control coborrower_middle_name" /></td>
+                                    <td><input type="text" name="edit_coborrower_last_name[]" class="form-control coborrower_last_name" /></td>
                                     <td><button type="button" name="remove" class="btn btn-danger btn-block remove"><i class="fas fa-times" style=" vertical-align: middle !important;"></button></td>
                                 </tr>
                             </tbody>
@@ -221,31 +232,31 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" style="width: 80px; max-width: 120px">Home:</span>
                                 </div>
-                                <input type="text" class="form-control edit_contact_number_home" aria-label="Home number" name="contact_number_home">
+                                <input type="text" class="form-control edit_contact_number_home" aria-label="Home number" name="edit_contact_number_home">
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" style="width: 80px; max-width: 100px">Mobile:</span>
                                 </div>
-                                <input type="text" class="form-control edit_contact_number_mobile" aria-label="Mobile number" name="contact_number_mobile">
+                                <input type="text" class="form-control edit_contact_number_mobile" aria-label="Mobile number" name="edit_contact_number_mobile">
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" style="width: 80px; max-width: 100px">Alt:</span>
                                 </div>
-                                <input type="text" class="form-control edit_contact_number_alt" aria-label="Alt number" name="contact_number_alt">
+                                <input type="text" class="form-control edit_contact_number_alt" aria-label="Alt number" name="edit_contact_number_alt">
                             </div>
                         </div>
                         <div class="col-md-6 py-20">
                             <label>Closing Time and Date</label>
-                            <input type="datetime-local" class="form-control input-lg edit_closing_time_and_date" name="closing_time_and_date"/>
+                            <input type="datetime-local" class="form-control input-lg edit_closing_time_and_date" name="edit_closing_time_and_date"/>
                         </div>
                         <div class="col-md-12 py-20">
                             <h4>Closing Information</h4>
                         </div>
                         <div class="col-md-6 py-20">
                             <label>Closing type</label>
-                            <select name="closing_type" class="form-control edit_closing_type">
+                            <select name="edit_closing_type" class="form-control edit_closing_type">
                                 <option selected disabled>Please choose...</option>
                                 <option value="0">Application</option>
                                 <option value="1">Deed Only</option>
@@ -257,27 +268,27 @@
                         </div>
                         <div class="col-md-6 py-20">
                             <label>Fax/Scanbacks</label>
-                            <select name="fax_select" class="form-control edit_fax_select">
+                            <select name="edit_fax_select" class="form-control edit_fax_select">
                                 <option value="-1" selected disabled>Please choose...</option>
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
                             </select>
                         </div>
                         <div class="col-md-6 py-20">
-                            <input type="text" class="form-control fax_number hide edit_closing_information_fax" placeholder="Fax number" name="closing_information_fax">
+                            <input type="text" class="form-control fax_number hide edit_closing_information_fax" placeholder="Fax number" name="edit_closing_information_fax">
                         </div>
                         <div class="col-md-6 py-20">
-                            <input type="email" class="form-control email hide edit_closing_information_email" placeholder="Email" name="closing_information_email">
+                            <input type="email" class="form-control email hide edit_closing_information_email" placeholder="Email" name="edit_closing_information_email">
                         </div>
                         <div class="col-md-12 py-20">
-                            <input type="text" class="form-control specify_other hide edit_closing_information_type_value" placeholder="Specify other..." name="closing_information_type_value">
+                            <input type="text" class="form-control specify_other hide edit_closing_information_type_value" placeholder="Specify other..." name="edit_closing_information_type_value">
                         </div>
                         <div class="col-md-12 py-20">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" style="width: 100px; max-width: 120px">LO Name:</span>
                                 </div>
-                                <input type="text" class="form-control edit_lo_name" aria-label="LO Name" name="lo_name">
+                                <input type="text" class="form-control edit_lo_name" aria-label="LO Name" name="edit_lo_name">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -285,7 +296,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" style="width: 100px; max-width: 120px">LO Number:</span>
                                 </div>
-                                <input type="text" class="form-control edit_lo_number" aria-label="LO Number" name="lo_number">
+                                <input type="text" class="form-control edit_lo_number" aria-label="LO Number" name="edit_lo_number">
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -293,12 +304,12 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" style="width: 100px; max-width: 120px">LO Email:</span>
                                 </div>
-                                <input type="email" class="form-control edit_lo_email" aria-label="LO Email" name="lo_email">
+                                <input type="email" class="form-control edit_lo_email" aria-label="LO Email" name="edit_lo_email">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-check">
-                                <input class="form-check-input edit_lo_info" type="checkbox" name="lo_info" id="lo_info" value="0">
+                                <input class="form-check-input edit_lo_info" type="checkbox" name="edit_lo_info" id="lo_info" value="0">
                                     <label class="form-check-label" for="lo_info">
                                         Include LO Info in Notary confirmation
                                     </label>
@@ -306,7 +317,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-check">
-                                <input class="form-check-input edit_notary_info" type="checkbox" name="notary_info" id="notary_info" value="1">
+                                <input class="form-check-input edit_notary_info" type="checkbox" name="edit_notary_info" id="notary_info" value="1">
                                     <label class="form-check-label" for="notary_info">
                                         Send Notary Info to LO
                                     </label>
@@ -314,11 +325,11 @@
                         </div>
                         <div class="col-md-6">
                             <label>Internal notes</label>
-                            <textarea class="form-control edit_internal_notes" name="internal_notes"></textarea>
+                            <textarea class="form-control edit_internal_notes" name="edit_internal_notes"></textarea>
                         </div>
                         <div class="col-md-6">
                             <label>Special instructions</label>
-                            <textarea class="form-control edit_special_instructions" name="special_instructions"></textarea>
+                            <textarea class="form-control edit_special_instructions" name="edit_special_instructions"></textarea>
                         </div>
                     </div>
                 </div>
@@ -336,7 +347,7 @@
             <button type="button" class="btn btn-danger btn-lg btn-block" data-dismiss="modal">Close</button>
         </div>
         <div class="col-md-3">
-            <button type="button" class="btn btn-primary btn-lg btn-block create_order">UPDATE ORDER</button>
+            <button type="button" class="btn btn-primary btn-lg btn-block update_order">UPDATE ORDER</button>
         </div>
       </div>
       </form>

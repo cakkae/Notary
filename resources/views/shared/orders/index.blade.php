@@ -47,7 +47,7 @@
                                 <tr>
                                     @if(!$isClient)
                                     <td><button type="button" class="btn btn-primary editOrder" data-toggle="modal" data-target="#editOrderModal"
-                                            data-id="{{ $order->order_id }}"
+                                            data-order_id="{{ $order->order_id }}"
                                             data-loan="{{ $order->loan_id }}"
                                             data-file="{{ $order->file_id }}"
                                             data-property_location_street_name = "{{ $order->property_location_street_name }}"
@@ -88,8 +88,8 @@
                                     @endif
                                     <td>{{ $order->loan_id }}</td>
                                     <td>{{ $order->file_id }}</td>
-                                    <td>{{ filterDate($order->closing_time_and_date) }}</td>
-                                    <td>{{ $order->borrower_name.' '.$order->borrower_surname }}</td>
+                                    <td>{{ date('m/d/yy', strtotime($order->closing_time_and_date))  }}</td>
+                                    <td>{{ $order->borrower_name.' '.$order->borrower_last_name }}</td>
                                     <td>{{ $order->close_location_street_name }}</td>
                                     <td>{{ $order->property_location_city }}</td>
                                     <td>{{ $order->property_location_zip }}</td>
@@ -292,7 +292,7 @@ function validate(formData, jqForm, options) {
         });
 
         $('.editOrder').click(function() {
-            var id = $(this).data("id");
+            var id = $(this).data("order_id");
             var loan = $(this).data("loan");
             var file = $(this).data("file");
             var property_location_street_name = $(this).data("property_location_street_name");
@@ -391,7 +391,7 @@ function validate(formData, jqForm, options) {
         });
 
         $('.uploadDocument').click(function() {
-            var id = $(this).data("id");
+            var id = $(this).data("order_id");
             var email = $(this).data("email");
 
             $('.inputEmail').val(email);
@@ -435,6 +435,119 @@ function validate(formData, jqForm, options) {
                 }
             });
         });
+
+        $('.update_order').on('click', function (e) {
+            e.preventDefault();
+            
+            // var order_id = $("input[name='edit_order_id']").val();
+            var loan_id = $("input[name='edit_loan_id']").val();
+            var file_id = $("input[name='file_id']").val();
+            var property_location_street_name = $("input[name='property_location_street_name']").val();
+            var property_location_additional_street_name = $("input[name='property_location_additional_street_name']").val();
+            var property_location_city = $("input[name='property_location_city']").val();
+            var property_location_state = $("select[name='property_location_state']").val();
+            var property_location_zip = $("input[name='property_location_zip']").val();
+            var close_location_street_name = $("input[name='close_location_street_name']").val();
+            var close_location_additional_street_name = $("input[name='close_location_additional_street_name']").val();
+            var close_location_city = $("input[name='close_location_city']").val();
+            var close_location_state = $("select[name='close_location_state']").val();
+            var close_location_zip = $("input[name='close_location_zip']").val();
+            var borrower_name = $("input[name='borrower_name']").val();
+            var borrower_middle_name = $("input[name='borrower_middle_name']").val();
+            var borrower_last_name = $("input[name='borrower_last_name']").val();
+            var borrower_email = $("input[name='borrower_email']").val();
+
+            coborrower_name = [];
+            coborrower_middle_name = [];
+            coborrower_last_name = [];
+
+            $('input[name="coborrower_name[]"]').each(function() {
+                var name = $(this).val();
+                item = {}
+                item ["name"] = name;
+                coborrower_name.push(item);
+            });
+            $('input[name="coborrower_middle_name[]"]').each(function() {
+                var name = $(this).val();
+                item = {}
+                item ["middle_name"] = name;
+                coborrower_middle_name.push(item);
+            });
+            $('input[name="coborrower_last_name[]"]').each(function() {
+                var name = $(this).val();
+                item = {}
+                item ["last_name"] = name;
+                coborrower_last_name.push(item);
+            });
+            
+            var contact_number_home = $("input[name='contact_number_home']").val();
+            var contact_number_mobile = $("input[name='contact_number_mobile']").val();
+            var contact_number_alt = $("input[name='contact_number_alt']").val();
+            var closing_time_and_date = $("input[name='closing_time_and_date']").val();
+            var closing_type = $("select[name='closing_type']").val();
+            var fax_select = $("select[name='fax_select']").val();
+            var closing_information_fax = $("input[name='closing_information_fax']").val();
+            var closing_information_email = $("input[name='closing_information_email']").val();
+            var closing_information_type_value = $("input[name='closing_information_type_value']").val();
+            var lo_name = $("input[name='lo_name']").val();
+            var lo_email = $("input[name='lo_email']").val();
+            var lo_number = $("input[name='lo_number']").val();
+            var created_by = $("input[name='created_by']").val();
+            var internal_notes = $("textarea[name='internal_notes']").val();
+            var special_instructions = $("textarea[name='special_instructions']").val();
+            $.ajax({
+                type:'POST',
+                url: "{{ route('update_order') }}",
+                data: {
+                        // order_id:order_id, 
+                        loan_id:loan_id, 
+                        file_id:file_id,
+                        property_location_street_name:property_location_street_name,
+                        property_location_additional_street_name:property_location_additional_street_name,
+                        property_location_city:property_location_city,
+                        property_location_state:property_location_state,
+                        property_location_zip:property_location_zip,
+                        close_location_street_name:close_location_street_name,
+                        close_location_additional_street_name:close_location_additional_street_name,
+                        close_location_city:close_location_city,
+                        close_location_state:close_location_state,
+                        close_location_zip:close_location_zip,
+                        borrower_name:borrower_name,
+                        borrower_middle_name:borrower_middle_name,
+                        borrower_last_name:borrower_last_name,
+                        borrower_email:borrower_email,
+                        coborrower_name:JSON.stringify(coborrower_name),
+                        coborrower_middle_name:JSON.stringify(coborrower_middle_name),
+                        coborrower_last_name:JSON.stringify(coborrower_last_name),
+                        contact_number_home:contact_number_home,
+                        contact_number_mobile:contact_number_mobile,
+                        contact_number_alt:contact_number_alt,
+                        closing_time_and_date:closing_time_and_date,
+                        closing_type:closing_type,
+                        closing_information_fax:closing_information_fax,
+                        closing_information_email:closing_information_email,
+                        closing_information_type_value:closing_information_type_value,
+                        lo_name:lo_name,
+                        lo_email:lo_email,
+                        lo_number:lo_number,
+                        fax_select: fax_select,
+                        internal_notes: internal_notes,
+                        special_instructions: special_instructions,
+                        created_by:created_by
+                    },
+                success: function(data) {
+                    if($.isEmptyObject(data.error)){
+                        toastr.success(data.success);
+                        window.location.reload();
+                    }else{
+                        toastr.error(data.error);
+                    }
+                },
+                error: function(jqXHR, textStatus, error) { 
+                    
+                }
+            });
+        })
 
         $('.create_order').on('click', function (e) {
             e.preventDefault();
@@ -632,20 +745,6 @@ function validate(formData, jqForm, options) {
             }
         });
 
-        /*$('.edit_fax_select').on('change', function() {
-            var selected_value = $(this).val();
-            if(selected_value == 1) {
-                $('.fax_number').removeClass('hide').addClass('show');
-                $('.email').removeClass('hide').addClass('show');
-            }
-            else {
-                $('.email').removeClass('show').addClass('hide');
-                $('.email').val() = "";
-                $('.fax_number').removeClass('show').addClass('hide');
-                $('.fax_number').val() = "";
-            }
-        });*/
-
         $('.closing_type, .edit_closing_type').on('change', function() {
             var selected_value = $(this).find(":selected").text();
             console.log($.trim(selected_value));
@@ -656,50 +755,6 @@ function validate(formData, jqForm, options) {
                 $('.specify_other').val("");
             }
         });
-
-        $('#notary_list').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: {
-                url: "{{ route('shared.orders') }}",
-            },
-            columns: [
-                {
-                    data: 'availability',
-                    name: 'availability',
-                    orderable: false
-                },
-                {
-                    data: 'name',
-                    name: 'name'
-                },
-                {
-                    data: 'lastName',
-                    name: 'lastName'
-                },
-                {
-                    data: 'middleName',
-                    name: 'middleName'
-                },
-                {
-                    data: 'paymentAddress',
-                    name: 'paymentAddress'
-                },
-                {
-                    data: 'companyName',
-                    name: 'companyName'
-                },
-                {
-                    data: 'email',
-                    name: 'email'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: false
-                }
-            ]
-        })
     });
 </script>
 @endsection

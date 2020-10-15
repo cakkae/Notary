@@ -20,6 +20,8 @@ class CheckRole
             return redirect('login');
 
         $user = Auth::user();
+        if($user->status == '0')
+            abort('403');
 
         foreach($roles as $role) {
             if($user->hasRole($role))

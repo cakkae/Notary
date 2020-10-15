@@ -57,6 +57,43 @@ class Order extends Controller
         return view('shared.orders.index', ['productTypes' => $productTypes, 'isClient' => $isClient, 'orders' => $orders, 'clients' => $clients, 'lastOrder' => $lastOrder, 'states' => $states, 'vendors' => $vendors]);
     }
 
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'loan_id' => 'required|numeric',
+            'file_id' => 'required',
+            'property_location_street_name' => 'required',
+            'property_location_city' => 'required',
+            'property_location_state' => 'required',
+            'property_location_zip' => 'required',
+            'close_location_street_name' => 'required',
+            'close_location_city' => 'required',
+            'close_location_state' => 'required',
+            'close_location_zip' => 'required',
+            'borrower_name' => 'required',
+            'borrower_last_name' => 'required',
+            'borrower_email' => 'required|email',
+            'closing_time_and_date' => 'required|date',
+            'closing_type' => 'required',
+            'lo_name' => 'required',
+            'lo_email' => 'required|email',
+            'lo_number' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error'=> $validator->errors()->first()]);
+        }
+
+        try {
+            $order = \App\Models\Order::find($request->edit_order_id);    
+            $order->fill($request->input())->save();
+            return response()->json(['success'=>'Order successfull edited.']);
+       } catch (Exception $e) {
+            return response()->json(['error'=> $e->getMessage()]);
+       }
+
+    }
+
     public function editOrder(Request $request)
     {   
         $lastOrder = \App\Models\Order::latest()->first();
@@ -182,12 +219,10 @@ class Order extends Controller
             'loan_id' => 'required|numeric',
             'file_id' => 'required',
             'property_location_street_name' => 'required',
-            'property_location_additional_street_name' => 'required',
             'property_location_city' => 'required',
             'property_location_state' => 'required',
             'property_location_zip' => 'required',
             'close_location_street_name' => 'required',
-            'close_location_additional_street_name' => 'required',
             'close_location_city' => 'required',
             'close_location_state' => 'required',
             'close_location_zip' => 'required',
