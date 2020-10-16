@@ -178,8 +178,8 @@ class CreateUsersTable extends Migration
             $table->integer('order_id')->unsigned()->unique();
             $table->integer('loan_id');
             $table->string('file_id');
-            $table->integer('notary_id')->unsigned();
-            $table->foreign('vendor_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('notary_id')->unsigned()->nullable();
+            $table->foreign('notary_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('property_location_street_name');
             $table->string('property_location_additional_street_name')->nullable();
             $table->string('property_location_city');
