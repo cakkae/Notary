@@ -97,7 +97,7 @@
                                     <td>{{ !empty($order->notary_phone) ? $order->notary_phone : 'N/A' }}</td>
                                     <td>{{ !empty($order->fee) ? $order->fee : 'N/A' }}</td>
                                     <td>
-                                        <span class="badge badge-success" style="padding: 5px; ">{{ show_order_status($order->status) }}</span>
+                                        {!! show_order_status($order->status) !!}
                                     </td>
                                     <?php $all_documents = \App\Models\OrderDocuments::select("*")->where("order_id",$order->order_id)->get(); ?>
                                     <td> <?php 
@@ -273,6 +273,7 @@ function validate(formData, jqForm, options) {
             var vendor_email = $(this).data("vendor_email");
             var vendor_fee = $(this).data("vendor_fee");
             var vendor_additional_service_fee = $(this).data("vendor_additional_service_fee");
+            var vendor_id = $(this).data("vendor_id");
 
             $('.vendor_first_name').val(vendor_first_name);
             $('.vendor_last_name').val(vendor_last_name);
@@ -284,6 +285,7 @@ function validate(formData, jqForm, options) {
             $('.vendor_email').val(vendor_email);
             $('.vendor_fee').val(vendor_fee);
             $('.vendor_additional_service_fee').val(vendor_additional_service_fee);
+            $('.vendor_id').val(vendor_id);
 
         });
 
@@ -374,7 +376,8 @@ function validate(formData, jqForm, options) {
             if(fax_select) {
                 $('.fax_number').removeClass('hide').addClass('show');
                 $('.email').removeClass('hide').addClass('show');
-            }
+            } 
+
             var order_date = closing_time_and_date.substr(0,closing_time_and_date.indexOf(' ')); 
             var order_time = closing_time_and_date.substr(closing_time_and_date.indexOf(' ')+1); 
             $(".edit_closing_time_and_date").val(order_date+"T"+order_time);
@@ -439,67 +442,71 @@ function validate(formData, jqForm, options) {
         $('.update_order').on('click', function (e) {
             e.preventDefault();
             
-            // var order_id = $("input[name='edit_order_id']").val();
+            var order_id = $("input[name='edit_order_id']").val();
             var loan_id = $("input[name='edit_loan_id']").val();
-            var file_id = $("input[name='file_id']").val();
-            var property_location_street_name = $("input[name='property_location_street_name']").val();
-            var property_location_additional_street_name = $("input[name='property_location_additional_street_name']").val();
-            var property_location_city = $("input[name='property_location_city']").val();
-            var property_location_state = $("select[name='property_location_state']").val();
-            var property_location_zip = $("input[name='property_location_zip']").val();
-            var close_location_street_name = $("input[name='close_location_street_name']").val();
-            var close_location_additional_street_name = $("input[name='close_location_additional_street_name']").val();
-            var close_location_city = $("input[name='close_location_city']").val();
-            var close_location_state = $("select[name='close_location_state']").val();
-            var close_location_zip = $("input[name='close_location_zip']").val();
-            var borrower_name = $("input[name='borrower_name']").val();
-            var borrower_middle_name = $("input[name='borrower_middle_name']").val();
-            var borrower_last_name = $("input[name='borrower_last_name']").val();
-            var borrower_email = $("input[name='borrower_email']").val();
+            var file_id = $("input[name='edit_file_id']").val();
+            var property_location_street_name = $("input[name='edit_property_location_street_name']").val();
+            var property_location_additional_street_name = $("input[name='edit_property_location_additional_street_name']").val();
+            var property_location_city = $("input[name='edit_property_location_city']").val();
+            var property_location_state = $("select[name='edit_property_location_state']").val();
+            var property_location_zip = $("input[name='edit_property_location_zip']").val();
+            var close_location_street_name = $("input[name='edit_close_location_street_name']").val();
+            var close_location_additional_street_name = $("input[name='edit_close_location_additional_street_name']").val();
+            var close_location_city = $("input[name='edit_close_location_city']").val();
+            var close_location_state = $("select[name='edit_close_location_state']").val();
+            var close_location_zip = $("input[name='edit_close_location_zip']").val();
+            var borrower_name = $("input[name='edit_borrower_name']").val();
+            var borrower_middle_name = $("input[name='edit_borrower_middle_name']").val();
+            var borrower_last_name = $("input[name='edit_borrower_last_name']").val();
+            var borrower_email = $("input[name='edit_borrower_email']").val();
 
             coborrower_name = [];
             coborrower_middle_name = [];
             coborrower_last_name = [];
 
-            $('input[name="coborrower_name[]"]').each(function() {
+            $('input[name="edit_coborrower_name[]"]').each(function() {
                 var name = $(this).val();
                 item = {}
                 item ["name"] = name;
                 coborrower_name.push(item);
             });
-            $('input[name="coborrower_middle_name[]"]').each(function() {
+            $('input[name="edit_coborrower_middle_name[]"]').each(function() {
                 var name = $(this).val();
                 item = {}
                 item ["middle_name"] = name;
                 coborrower_middle_name.push(item);
             });
-            $('input[name="coborrower_last_name[]"]').each(function() {
+            $('input[name="edit_coborrower_last_name[]"]').each(function() {
                 var name = $(this).val();
                 item = {}
                 item ["last_name"] = name;
                 coborrower_last_name.push(item);
             });
             
-            var contact_number_home = $("input[name='contact_number_home']").val();
-            var contact_number_mobile = $("input[name='contact_number_mobile']").val();
-            var contact_number_alt = $("input[name='contact_number_alt']").val();
-            var closing_time_and_date = $("input[name='closing_time_and_date']").val();
-            var closing_type = $("select[name='closing_type']").val();
-            var fax_select = $("select[name='fax_select']").val();
-            var closing_information_fax = $("input[name='closing_information_fax']").val();
-            var closing_information_email = $("input[name='closing_information_email']").val();
-            var closing_information_type_value = $("input[name='closing_information_type_value']").val();
-            var lo_name = $("input[name='lo_name']").val();
-            var lo_email = $("input[name='lo_email']").val();
-            var lo_number = $("input[name='lo_number']").val();
-            var created_by = $("input[name='created_by']").val();
-            var internal_notes = $("textarea[name='internal_notes']").val();
-            var special_instructions = $("textarea[name='special_instructions']").val();
+            var contact_number_home = $("input[name='edit_contact_number_home']").val();
+            var contact_number_mobile = $("input[name='edit_contact_number_mobile']").val();
+            var contact_number_alt = $("input[name='edit_contact_number_alt']").val();
+            var closing_time_and_date = $("input[name='edit_closing_time_and_date']").val();
+            var closing_type = $("select[name='edit_closing_type']").val();
+            var fax_select = $("select[name='edit_fax_select']").val();
+            var closing_information_fax = $("input[name='edit_closing_information_fax']").val();
+            var closing_information_email = $("input[name='edit_closing_information_email']").val();
+            var closing_information_type_value = $("input[name='edit_closing_information_type_value']").val();
+            var lo_name = $("input[name='edit_lo_name']").val();
+            var lo_email = $("input[name='edit_lo_email']").val();
+            var lo_number = $("input[name='edit_lo_number']").val();
+            var status = $("select[name='edit_status']").val();
+            var created_by = $("input[name='edit_created_by']").val();
+            var internal_notes = $("textarea[name='edit_internal_notes']").val();
+            var special_instructions = $("textarea[name='edit_special_instructions']").val();
+
+            var notary_id = $("input[name='edit_vendor_id']").val();
+
             $.ajax({
                 type:'POST',
                 url: "{{ route('update_order') }}",
                 data: {
-                        // order_id:order_id, 
+                        order_id:order_id, 
                         loan_id:loan_id, 
                         file_id:file_id,
                         property_location_street_name:property_location_street_name,
@@ -533,6 +540,8 @@ function validate(formData, jqForm, options) {
                         fax_select: fax_select,
                         internal_notes: internal_notes,
                         special_instructions: special_instructions,
+                        status: status,
+                        notary_id:notary_id,
                         created_by:created_by
                     },
                 success: function(data) {

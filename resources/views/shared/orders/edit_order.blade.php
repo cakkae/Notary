@@ -3,7 +3,7 @@
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Order Modal</h5>
+        <h4>Order edit</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -15,7 +15,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-4 py-20">
+                        <div class="col-md-3 py-20">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Order #</span>
@@ -23,7 +23,7 @@
                                 <input type="text" readonly class="form-control edit_order_id" aria-label="Order#" name="edit_order_id">
                             </div>
                         </div>
-                        <div class="col-md-4 py-20">
+                        <div class="col-md-3 py-20">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">Loan #</span>
@@ -31,12 +31,27 @@
                                 <input type="text" class="form-control edit_loan_id" aria-label="Loan#" name="edit_loan_id">
                             </div>
                         </div>
-                        <div class="col-md-4 py-20">
+                        <div class="col-md-3 py-20">
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text">File #</span>
                                 </div>
                                 <input type="text" class="form-control edit_file_id" aria-label="File#" name="edit_file_id">
+                            </div>
+                        </div>
+                        <div class="col-md-3 py-20">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Status</span>
+                                </div>
+                                <select class="form-control edit_status" name="edit_status" id="status">
+                                    <option value="" disabled>Select status</option>
+                                    <option value="0">Active</option>
+                                    <option value="1">Closed</option>
+                                    <option value="2">Cancelled</option>
+                                    <option value="3">Re-Sign</option>
+                                    <option value="4">Compliance</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-12">
@@ -63,6 +78,7 @@
                                             <td>40</td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn_select_notary btn-block"
+                                                data-vendor_id="{{ $vendor->id }}"
                                                 data-vendor_first_name="{{ $vendor->name }}"
                                                 data-vendor_last_name="{{ $vendor->lastName }}"
                                                 data-vendor_address="{{ $vendor->name }}"
@@ -90,6 +106,7 @@
                         </div>
                         <div class="col-md-12">
                         <h4>Notary Info</h4>
+                        <input type="hidden" class="form-control vendor_id" name="edit_vendor_id">
                         </div>
                         <div class="col-md-6 py-20">
                             <label>Firstname:</label>
@@ -144,7 +161,7 @@
                                     <input type="text" class="form-control edit_property_location_city" name="edit_property_location_city" placeholder="City">
                                 </div>
                                 <div class="col-md-4 py-20">
-                                    <select class="form-control" name="edit_property_location_state" id="edit_property_location_state">
+                                    <select class="form-control edit_property_location_state" name="edit_property_location_state" id="edit_property_location_state">
                                         <option value="">Select state</option>
                                             @foreach($states as $state) 
                                                 <option value="{{ $state->state_id }}">{{ $state->state }}  </option>
@@ -169,13 +186,12 @@
                                     <input type="text" class="form-control edit_close_location_city" name="edit_close_location_city" placeholder="City">
                                 </div>
                                 <div class="col-md-4 py-20">
-                                    <select class="form-control" name="edit_close_location_state" id="edit_close_location_state">
+                                    <select class="form-control edit_close_location_state" name="edit_close_location_state" id="edit_close_location_state">
                                         <option value="">Select state</option>
                                             @foreach($states as $state) 
                                                 <option value="{{ $state->state_id }}">{{ $state->state }}  </option>
                                             @endforeach
                                     </select>
-                                    <input type="text" class="form-control edit_close_location_state" name="edit_close_location_state" placeholder="State">
                                 </div>
                                 <div class="col-md-4 py-20">
                                     <input type="text" class="form-control edit_close_location_zip" name="edit_close_location_zip" placeholder="Zip">
@@ -269,7 +285,7 @@
                         <div class="col-md-6 py-20">
                             <label>Fax/Scanbacks</label>
                             <select name="edit_fax_select" class="form-control edit_fax_select">
-                                <option value="-1" selected disabled>Please choose...</option>
+                                <option value="-1" disabled>Please choose...</option>
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
                             </select>

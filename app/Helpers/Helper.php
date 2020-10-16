@@ -4,11 +4,20 @@ if(! function_exists('show_order_status')) {
   function show_order_status($value){
     switch($value){
       case 0:
-       return 'Active';
-       break;
+        return '<span class="badge badge-primary" style="padding: 5px; ">Active</span>';
+        break;
       case 1:
-       return 'Closed';
-       break;
+        return '<span class="badge badge-secondary" style="padding: 5px; ">Closed</span>';
+        break;
+      case 2:
+        return '<span class="badge badge-danger" style="padding: 5px; ">Cancelled</span>';
+        break;
+      case 3:
+        return '<span class="badge badge-info" style="padding: 5px; ">Re-Sign</span>';
+        break;
+      case 4:
+        return '<span class="badge badge-success" style="padding: 5px; ">Compliance</span>';
+        break;
     }
   }
 }

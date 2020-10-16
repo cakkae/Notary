@@ -85,7 +85,7 @@ class Order extends Controller
         }
 
         try {
-            $order = \App\Models\Order::find($request->edit_order_id);    
+            $order = \App\Models\Order::where('order_id',$request->order_id)->first();    
             $order->fill($request->input())->save();
             return response()->json(['success'=>'Order successfull edited.']);
        } catch (Exception $e) {

@@ -1,5 +1,9 @@
+/* BADGE COLORS */
+.badge-primary, .badge-success, .badge-danger, .badge-dark, .badge-info {
+  color: white; 
+}
 
- .container-fluid {
+.container-fluid {
     padding-top: 10px;
 }
 

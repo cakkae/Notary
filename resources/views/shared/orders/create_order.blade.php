@@ -192,7 +192,7 @@
                         <div class="col-md-6 py-20">
                             <label>Fax/Scanbacks</label>
                             <select name="fax_select" class="form-control fax_select">
-                                <option value="-1" selected disabled>Please choose...</option>
+                                <option value="-1" disabled>Please choose...</option>
                                 <option value="0">No</option>
                                 <option value="1">Yes</option>
                             </select>

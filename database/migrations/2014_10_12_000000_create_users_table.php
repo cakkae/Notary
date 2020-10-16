@@ -178,13 +178,15 @@ class CreateUsersTable extends Migration
             $table->integer('order_id')->unsigned()->unique();
             $table->integer('loan_id');
             $table->string('file_id');
+            $table->integer('notary_id')->unsigned();
+            $table->foreign('vendor_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('property_location_street_name');
-            $table->string('property_location_additional_street_name');
+            $table->string('property_location_additional_street_name')->nullable();
             $table->string('property_location_city');
             $table->string('property_location_state');
             $table->string('property_location_zip');
             $table->string('close_location_street_name');
-            $table->string('close_location_additional_street_name');
+            $table->string('close_location_additional_street_name')->nullable();
             $table->string('close_location_city');
             $table->string('close_location_state');
             $table->string('close_location_zip');
@@ -206,6 +208,7 @@ class CreateUsersTable extends Migration
             $table->string('lo_name');
             $table->string('lo_number');
             $table->string('lo_email');
+            $table->integer('order_fee')->nullable();
             $table->text('fax_select')->nullable();
             $table->text('internal_notes')->nullable();
             $table->text('special_instructions')->nullable();
