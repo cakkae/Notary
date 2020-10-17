@@ -62,14 +62,12 @@
                                                 <button type="button" class="btn btn-primary btn_select_notary btn-block"
                                                 data-vendor_first_name="{{ $vendor->name }}"
                                                 data-vendor_last_name="{{ $vendor->lastName }}"
-                                                data-vendor_address="{{ $vendor->name }}"
-                                                data-vendor_city="{{ $vendor->name }}"
-                                                data-vendor_state="{{ $vendor->name }}"
-                                                data-vendor_zip_code="{{ $vendor->name }}"
+                                                data-vendor_address="{{ $vendor->paymentAddress }}"
+                                                data-vendor_city="{{ $vendor->city }}"
+                                                data-vendor_state="{{ $vendor->state }}"
+                                                data-vendor_zip_code="{{ $vendor->zipCode }}"
                                                 data-vendor_phone_number="{{ $vendor->name }}"
-                                                data-vendor_email="{{ $vendor->email }}"
-                                                data-vendor_fee="{{ $vendor->name }}"
-                                                data-vendor_additional_service_fee="{{ $vendor->name }}">SELECT</button>
+                                                data-vendor_email="{{ $vendor->email }}">SELECT</button>
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-success btn_notary_details btn-block"

@@ -82,6 +82,8 @@
                                             data-fax_select = "{{ $order->fax_select }}"
                                             data-special_instructions = "{{ $order->special_instructions }}"
                                             data-status = "{{ $order->status }}"
+                                            data-notary_id = "{{ $order->notary_id }}"
+                                            data-fee = "{{ $order->fee }}"
                                          ><i class="fas fa-edit"></button></td>
                                     @else
                                     <td><button type="button" class="btn btn-primary sendEditOrderModal" data-toggle="modal" data-target="#sendEditOrderModal" data-id="{{ $order->order_id }}"><i class="fas fa-edit"></button></td>
@@ -329,10 +331,14 @@ function validate(formData, jqForm, options) {
             var internal_notes = $(this).data("internal_notes");
             var special_instructions = $(this).data("special_instructions");
             var status = $(this).data("status");
+            var notary_id = $(this).data("notary_id");
+            var fee = $(this).data("fee");
 
             $('.edit_order_id').val(id);
             $('.edit_loan_id').val(loan);
             $('.edit_file_id').val(file);
+            $('.vendor_id').val(notary_id);
+            $('.vendor_fee').val(fee);
 
             $('.edit_property_location_street_name').val(property_location_street_name);
             $('.edit_property_location_additional_street_name').val(property_location_additional_street_name);
@@ -390,6 +396,30 @@ function validate(formData, jqForm, options) {
                 $('.edit_lo_info').prop('checked', true);
             if(special_instructions !== '')
                 $('.edit_notary_info').prop('checked', true);
+
+            var vendor_id = $('.vendor_id').val();
+
+            if(vendor_id != '') {
+                $.ajax({
+                    type: "get",
+                    dataType: "json",       
+                    url: "{{ url('/getVendorById') }}/"+vendor_id,
+                    success: function(response)
+                    {
+                        if(response) {
+                            $('.vendor_first_name').val(JSON.stringify(response.data[0].name).replace(/['"]+/g, '')); 
+                            $('.vendor_last_name').val(JSON.stringify(response.data[0].lastName).replace(/['"]+/g, '')); 
+                            $('.vendor_address').val(JSON.stringify(response.data[0].paymentAddress).replace(/['"]+/g, '')); 
+                            $('.vendor_city').val(JSON.stringify(response.data[0].lastName).replace(/['"]+/g, '')); 
+                            $('.vendor_state').val(JSON.stringify(response.data[0].lastName).replace(/['"]+/g, '')); 
+
+                        }
+                    },
+                    error: function(jqXHR, textStatus, error) { 
+                        alert(error);
+                    }
+                });
+            }
 
         });
 
@@ -501,6 +531,7 @@ function validate(formData, jqForm, options) {
             var special_instructions = $("textarea[name='edit_special_instructions']").val();
 
             var notary_id = $("input[name='edit_vendor_id']").val();
+            var fee = $("input[name='edit_vendor_fee']").val();
 
             $.ajax({
                 type:'POST',
@@ -542,6 +573,7 @@ function validate(formData, jqForm, options) {
                         special_instructions: special_instructions,
                         status: status,
                         notary_id:notary_id,
+                        fee:fee,
                         created_by:created_by
                     },
                 success: function(data) {

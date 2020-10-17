@@ -93,6 +93,7 @@ Route::namespace('Vendor')->group(function () {
     Route::get('/getZipCode/{country_name}','Coverage@getZipCode');
 });
 
+Route::get('/getVendorById/{vendor_id}', 'Shared\Order@getVendorById')->name('getVendorById')->middleware('role:User,Admin');
 Route::get('/orders/{order_id}','Shared\Order@editOrder')->name('shared.orders.edit')->middleware('role:User,Admin');
 Route::get('/orders', 'Shared\Order@index')->name('shared.orders')->middleware('role:User,Admin,Client,Owner');
 Route::post('/create_order', 'Shared\Order@create')->name('create_order')->middleware('role:User,Admin,Client');

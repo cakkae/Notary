@@ -48,6 +48,9 @@ class CreateUsersTable extends Migration
             $table->string('phone')->nullable();
             $table->string('taxId')->nullable();
             $table->string('paymentAddress')->nullable();
+            $table->string('zipCode')->nullable();
+            $table->string('state')->nullable();
+            $table->string('city')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -180,6 +183,7 @@ class CreateUsersTable extends Migration
             $table->string('file_id');
             $table->integer('notary_id')->unsigned()->nullable();
             $table->foreign('notary_id')->references('id')->on('users')->onDelete('cascade');
+            $table->float('fee')->nullable();
             $table->string('property_location_street_name');
             $table->string('property_location_additional_street_name')->nullable();
             $table->string('property_location_city');

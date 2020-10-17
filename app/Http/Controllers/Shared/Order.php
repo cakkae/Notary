@@ -94,6 +94,14 @@ class Order extends Controller
 
     }
 
+    public function getVendorById($vendor_id) {
+        $vendor = User::select("*")
+                    ->where("id",$vendor_id)
+                    ->get();
+        return response()->json(['data'=>$vendor]);
+
+    }
+
     public function editOrder(Request $request)
     {   
         $lastOrder = \App\Models\Order::latest()->first();
