@@ -87,6 +87,7 @@ Route::namespace('Vendor')->group(function () {
         Route::post('/updateAccountSettings', 'Settings@update')->name('updateAccountSettings');
         Route::post('/updateHardwareSettings', 'Hardware@update')->name('updateHardwareSettings');
         Route::post('/updateCoverage', 'Coverage@update')->name('updateCoverage');
+        Route::post('/updatePricing','Pricing@update')->name('updatePricing');
 
     });
     Route::get('/getCountry/{state_id}','Coverage@getCountry');
