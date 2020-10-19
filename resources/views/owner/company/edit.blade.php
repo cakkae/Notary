@@ -125,9 +125,9 @@
                                                     class="editUserButton"
                                                     data-user_id="{{ $user->id }}"
                                                     data-name="{{ $user->name }}"
-                                                    data-lastName="{{ $user->lastName }}"
+                                                    data-lastname="{{ $user->lastName }}"
                                                     data-email="{{ $user->email }}"
-                                                    data-middlename="{{ $user->middlename }}"
+                                                    data-middlename="{{ $user->middleName }}"
                                                     data-phone="{{ $user->phone }}"
                                                     data-permission="{{ $user->roles->first()['pivot']['role_id'] }}"
                                                     >
@@ -256,7 +256,7 @@
       </div>
       <form>
       <div class="modal-body userForm">
-        <input type="hidden" class="user_id" name="user_id">
+        <input type="hidden" class="edit_user_id" name="user_id">
         <div class="row">
             <div class="col-md-6">
                 <label>
@@ -266,15 +266,15 @@
             </div>
             <div class="col-md-6">
                 <label>
-                    Surname:
+                    Lastname:
                 </label>
-                <input type="text" class="form-control edit_lastName" name="lastName" placeholder="Enter surname...">
+                <input type="text" class="form-control edit_lastName" name="lastName" placeholder="Enter lastname...">
             </div>
             <div class="col-md-6 py-20">
                 <label>
                     Email:
                 </label>
-                <input type="email" class="form-control edit_email" name="email" placeholder="Enter email...">
+                <input type="email" class="form-control edit_email" name="email" placeholder="Enter email..." readonly>
             </div>
             <div class="col-md-6 py-20">
                 <label>
@@ -341,9 +341,9 @@
             </div>
             <div class="col-md-6">
                 <label>
-                    Surname:
+                    Lastname:
                 </label>
-                <input type="text" class="form-control lastName" name="lastName" placeholder="Enter surname...">
+                <input type="text" class="form-control lastName" name="lastName" placeholder="Enter lastname...">
             </div>
             <div class="col-md-6 py-20">
                 <label>
@@ -417,7 +417,7 @@ $(document).ready(function($){
     $('.editUserButton').on('click', function () {
         
         var name = $(this).data('name');
-        var lastName = $(this).data('lastName');
+        var lastname = $(this).data('lastname');
         var email = $(this).data('email');
         var middlename = $(this).data('middlename');
         var phone = $(this).data('phone');
@@ -425,12 +425,12 @@ $(document).ready(function($){
         var user_id = $(this).data('user_id');
 
         $('.editUserModal .userForm .edit_name').val(name);
-        $('.editUserModal .userForm .edit_lastName').val(lastName);
+        $('.editUserModal .userForm .edit_lastName').val(lastname);
         $('.editUserModal .userForm .edit_email').val(email);
         $('.editUserModal .userForm .edit_middlename').val(middlename);
         $('.editUserModal .userForm .edit_phone').val(phone);
         $('.editUserModal .userForm .edit_permission').val(permission);
-        $('.editUserModal .userForm .user_id').val(user_id);
+        $('.editUserModal .userForm .edit_user_id').val(user_id);
 
         jQuery('.editUserModal').modal("show");
     });
@@ -477,7 +477,7 @@ $(document).ready(function($){
         var email = $('.userForm .edit_email').val();
         var role_id = $( ".userForm .edit_permission option:selected" ).val();
         var company_id = $('input[name="company_id"]').val();
-        var user_id = $('.userForm .user_id').val();
+        var user_id = $('.userForm .edit_user_id').val();
 
         $.ajax({
                 type:'POST',

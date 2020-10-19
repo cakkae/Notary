@@ -101,7 +101,7 @@ Route::post('/update_order', 'Shared\Order@update')->name('update_order')->middl
 Route::post('/add_document_order', 'Shared\Order@addDocuments')->name('add_document_order')->middleware('role:User,Admin,Client');
 Route::post('/send_order_email', 'Shared\Order@send_order_email')->name('send_order_email')->middleware('role:User,Admin');
 Route::get('/uploaded_documents_list/{order_id}','Shared\Order@getAllDocumentsByOrder')->name('uploaded_documents_list')->middleware('role:User,Admin,Client');
-Route::delete('/delete_document/{document_id}','Shared\Order@deleteDocument')->name('delete_document')->middleware('role:User,Admin,Client');
+Route::delete('/delete_document/{document_id}/{order_id}','Shared\Order@deleteDocument')->name('delete_document')->middleware('role:User,Admin,Client');
 Route::post('add_user_order_request', 'Shared\Order@addOrderRequest')->name('add_user_order_request')->middleware('role:Client');
 Route::get('/current_user_edit_orders', 'Shared\Order@currentUserEditRequest')->name('currentUserEditRequest');
 

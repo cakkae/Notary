@@ -338,7 +338,7 @@ function validate(formData, jqForm, options) {
             $('.edit_loan_id').val(loan);
             $('.edit_file_id').val(file);
             $('.vendor_id').val(notary_id);
-            $('.vendor_fee').val(fee);
+            // $('.vendor_fee').val(fee);
 
             $('.edit_property_location_street_name').val(property_location_street_name);
             $('.edit_property_location_additional_street_name').val(property_location_additional_street_name);
@@ -424,7 +424,7 @@ function validate(formData, jqForm, options) {
         });
 
         $('.uploadDocument').click(function() {
-            var id = $(this).data("order_id");
+            var id = $(this).data("id");
             var email = $(this).data("email");
 
             $('.inputEmail').val(email);
@@ -439,7 +439,7 @@ function validate(formData, jqForm, options) {
                         if(response) {
                             $("#uploaded_documents_list").empty();
                             $.each(response, function (key, value) {
-                                $('#uploaded_documents_list').append('<tr><td class="uploadedDocument"><i class="far fa-file fa-2x"></i> '+response[key]['name']+'</td><td id="deleteDocument" data-id='+response[key]['id']+'><i class="far fa-times fa-2x" style="color: red;"></i></td></tr>');
+                                $('#uploaded_documents_list').append('<tr><td class="uploadedDocument"><i class="far fa-file fa-2x"></i> '+response[key]['name']+'</td><td id="deleteDocument" data-id='+response[key]['id']+' data-order_id='+response[key]['order_id']+'><i class="far fa-times fa-2x" style="color: red;"></i></td></tr>');
                             });
                         }
                     },
@@ -451,12 +451,14 @@ function validate(formData, jqForm, options) {
 
         $(document).on('click', '#deleteDocument' , function() {
             var id = $(this).data("id");
+            var order_id = $(this).data("order_id");
             $.ajax({
-                url: "/delete_document/"+id,
+                url: "/delete_document/"+id+'/'+order_id,
                 type: 'delete', // replaced from put
                 dataType: "JSON",
                 data: {
-                    "id": id 
+                    "id": id,
+                    "order_id": order_id
                 },
                 success: function (response)
                 {

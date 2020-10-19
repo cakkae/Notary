@@ -142,7 +142,7 @@
                         </div>
                         <div class="col-md-4 py-20">
                             <label>Fee:</label>
-                            <input type="text" class="form-control vendor_fee" name="edit_vendor_fee">
+                            <input type="text" class="form-control vendor_fee" name="edit_vendor_fee" value="150" readonly>
                         </div>
                         <div class="col-md-12 py-20">
                             <label>Additional Service Fee:</label>

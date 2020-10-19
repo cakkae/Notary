@@ -197,11 +197,11 @@ class CreateUsersTable extends Migration
             $table->string('borrower_name');
             $table->string('borrower_middle_name')->nullable();
             $table->string('borrower_last_name');
-            $table->string('borrower_email');
+            $table->string('borrower_email')->nullable();
             $table->text('coborrower_name')->nullable();
             $table->text('coborrower_middle_name')->nullable();
             $table->text('coborrower_last_name')->nullable();
-            $table->string('contact_number_home');
+            $table->string('contact_number_home')->nullable();
             $table->string('contact_number_mobile')->nullable();
             $table->string('contact_number_alt')->nullable();
             $table->datetime('closing_time_and_date');
@@ -209,9 +209,9 @@ class CreateUsersTable extends Migration
             $table->string('closing_information_type_value')->nullable();
             $table->string('closing_information_email')->nullable();
             $table->string('closing_information_fax')->nullable();
-            $table->string('lo_name');
-            $table->string('lo_number');
-            $table->string('lo_email');
+            $table->string('lo_name')->nullable();
+            $table->string('lo_number')->nullable();
+            $table->string('lo_email')->nullable();
             $table->integer('order_fee')->nullable();
             $table->text('fax_select')->nullable();
             $table->text('internal_notes')->nullable();

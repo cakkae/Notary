@@ -72,12 +72,12 @@ class Order extends Controller
             'close_location_zip' => 'required',
             'borrower_name' => 'required',
             'borrower_last_name' => 'required',
-            'borrower_email' => 'required|email',
+            'borrower_email' => 'nullable|email',
             'closing_time_and_date' => 'required|date',
             'closing_type' => 'required',
-            'lo_name' => 'required',
-            'lo_email' => 'required|email',
-            'lo_number' => 'required|numeric'
+            'lo_name' => 'nullable',
+            'lo_email' => 'nullable|email',
+            'lo_number' => 'nullable|numeric'
         ]);
 
         if ($validator->fails()) {
@@ -174,9 +174,12 @@ class Order extends Controller
         return response()->json($documents);  
     }
 
-    public function deleteDocument($document_id) {
+    public function deleteDocument($document_id, $order_id) {
         try {
             OrderDocuments::destroy($document_id);
+            if (OrderDocuments::where('order_id', '=', $order_id)->count() == 0) {
+                \App\Models\Order::where('order_id', $order_id)->update(array('document_status' => '0'));
+             }
             return response()->json(['success'=>'Document successfully deleted.']);
        } catch (Exception $e) {
             return response()->json(['error'=> 'Error while deleting document =>'.$e]);
@@ -236,12 +239,12 @@ class Order extends Controller
             'close_location_zip' => 'required',
             'borrower_name' => 'required',
             'borrower_last_name' => 'required',
-            'borrower_email' => 'required|email',
+            'borrower_email' => 'nullable|email',
             'closing_time_and_date' => 'required|date',
             'closing_type' => 'required',
-            'lo_name' => 'required',
-            'lo_email' => 'required|email',
-            'lo_number' => 'required|numeric'
+            'lo_name' => 'nullable',
+            'lo_email' => 'nullable|email',
+            'lo_number' => 'nullable|numeric'
         ]);
 
         if ($validator->fails()) {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Organization;
+use App\Models\GeoData;
 use Illuminate\Database\Seeder;
 
 class OrganizationSeeder extends Seeder
@@ -19,5 +20,14 @@ class OrganizationSeeder extends Seeder
         $organization->company_email = "";
         $organization->company_address = "";
         $organization->save();
+
+        $geoData = new GeoData;
+        $geoData->state_id = 1;
+        $geoData->state = "ALABAMA";
+        $geoData->state_abbr = "ALABAMA";
+        $geoData->zipcode = "ALABAMA";
+        $geoData->country = "ALABAMA";
+        $geoData->city = "ALABAMA";
+        $geoData->save();
     }
 }

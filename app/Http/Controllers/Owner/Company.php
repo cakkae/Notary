@@ -59,7 +59,7 @@ class Company extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'lastName' => 'required',
-            'phone' => 'required|numeric',
+            'phone' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8'
         ]);
@@ -200,9 +200,8 @@ class Company extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'lastName' => 'required',
-            'phone' => 'required|numeric',
+            'phone' => 'required',
             'role_id' => 'required',
-            'email' => 'required|email|max:255|unique:users,email,'.$request->user_id.',id' 
         ]);
 
         if ($validator->fails()) {
@@ -210,12 +209,11 @@ class Company extends Controller
         }
 
         try {
-            User::where('id', $request->company_id)->update(
+            User::where('id', $request->user_id)->update(
                 array(
                     'name' => $request->name,
                     'lastName' => $request->lastName,
                     'phone' => $request->phone,
-                    'email' => $request->email,
                     'middleName' => $request->middleName,
                     'company_id' => $request->company_id
                 ));
