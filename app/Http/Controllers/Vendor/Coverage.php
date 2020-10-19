@@ -19,6 +19,7 @@ class Coverage extends Controller
         $country = GeoData::select("country")
                     ->where("state_id",$state_id)
                     ->distinct()
+                    ->orderBy('country', 'asc')
                     ->get();
         return response()->json($country);    
     }

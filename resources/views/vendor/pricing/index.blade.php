@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container-fluid">
-<form>
+<form id="updatePricing">
     {{ csrf_field() }}
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -160,32 +160,11 @@
     $('document').ready(function () {
         $(".btn-submit").click(function(e){
             e.preventDefault();
-       
-            var _token = $("input[name='_token']").val();
-            var hardware_1 = +$("#hardware_1")[0].checked;
-            var hardware_2 = +$("#hardware_2")[0].checked;
-            var hardware_3 = +$("#hardware_3")[0].checked;
-            var hardware_4 = +$("#hardware_4")[0].checked;
-            var hardware_5 = +$("#hardware_5")[0].checked;
-            var hardware_6 = +$("#hardware_6")[0].checked;
-            var hardware_7 = +$("#hardware_7")[0].checked;
-            var hardware_8 = +$("#hardware_8")[0].checked;
 
             $.ajax({
-                url: "{{ route('updateHardwareSettings') }}",
+                url: "{{ route('updatePricing') }}",
                 type:'POST',
-                data: {
-                    _token:_token, 
-                    user_id:user_id, 
-                    hardware_1:hardware_1, 
-                    hardware_2:hardware_2, 
-                    hardware_3:hardware_3, 
-                    hardware_4: hardware_4, 
-                    hardware_5: hardware_5, 
-                    hardware_6:hardware_6, 
-                    hardware_7:hardware_7, 
-                    hardware_8:hardware_8
-                },
+                data: $("#updatePricing").serialize(),
                 success: function(data) {
                     if($.isEmptyObject(data.error)){
                         toastr.success(data.success);

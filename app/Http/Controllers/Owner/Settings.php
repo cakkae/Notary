@@ -52,12 +52,24 @@ class Settings extends Controller
         }
     }
 
-    public function deleteSuperAdmin($user_id)
+    /*public function deleteSuperAdmin($user_id)
     {
         try {
             $user = User::find($user_id);
             $user->status = '0';
             $user->save();
+            return back();
+        }catch (Exception $e) {
+            return response()->json(['error'=> $e.getMessage()]);
+        }
+    }*/
+
+     public function deleteSuperAdmin($user_id)
+    {
+        try {
+            $user = User::destroy($user_id);
+            /*$user->status = '0';
+            $user->save();*/
             return back();
         }catch (Exception $e) {
             return response()->json(['error'=> $e.getMessage()]);

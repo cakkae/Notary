@@ -237,9 +237,9 @@
             </div>
             <div class="col-md-6">
                 <label>
-                    Surname:
+                    Lastname:
                 </label>
-                <input type="text" class="form-control edit_lastName" placeholder="Enter surname...">
+                <input type="text" class="form-control edit_lastName" placeholder="Enter lastname...">
             </div>
             <div class="col-md-6 py-20">
                 <label>
