@@ -13,28 +13,54 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="user_id" id="user_id" class="form-control" value="{{ Auth::user()->id }}">
 
-                        <label for="name">First name</label>
-                        <input id="name" name="name" type="text" class="form-control" value="{{ $user->name }}">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="name">First name</label>
+                                <input id="name" name="name" type="text" class="form-control" value="{{ $user->name }}">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="middleName">Middle name</label>
+                                <input id="middleName" name="middleName" type="text" class="form-control" value="{{ $user->middleName }}">
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                    <label for="lastName">Last name</label>
+                                    <input id="lastName" name="lastName" type="text" class="form-control" value="{{ $user->lastName }}">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="companyName">Company name</label>
+                                <input id="companyName" name="companyName" type="text" class="form-control" value="{{ $user->companyName }}">
+                            </div>
+                        </div>
+                    </div>                        
 
-                        </br>
-                        <label for="middleName">Middle name</label>
-                        <input id="middleName" name="middleName" type="text" class="form-control" value="{{ $user->middleName }}">
-
-                        </br>
-                        <label for="lastName">Last name</label>
-                        <input id="lastName" name="lastName" type="text" class="form-control" value="{{ $user->lastName }}">
-
-                        </br>
-                        <label for="companyName">Company name</label>
-                        <input id="companyName" name="companyName" type="text" class="form-control" value="{{ $user->companyName }}">
-
-                        </br>
                         <label for="taxId">Tax ID or SS#</label>
                         <input id="taxId"  name="taxId" type="text" class="form-control" value="{{ $user->taxId }}">
 
                         </br>
                         <label for="paymentAddress">Payment address</label>
                         <input id="paymentAddress"  name="paymentAddress" type="text" class="form-control" value="{{ $user->paymentAddress }}">
+
+                        </br>
+                        <label for="city">City</label>
+                        <input id="city"  name="city" type="text" class="form-control" value="{{ $user->city }}">
+
+                        </br>
+                        <label for="state">State</label>
+                        <input id="state"  name="state" type="text" class="form-control" value="{{ $user->state }}">
+
+                        </br>
+                        <label for="zipCode">Zip</label>
+                        <input id="zipCode"  name="zipCode" type="text" class="form-control" value="{{ $user->zipCode }}">
 
                         </br>
                         <button class="btn btn-success btn-submit">Update</button>
