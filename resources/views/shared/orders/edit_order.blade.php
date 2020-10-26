@@ -81,13 +81,13 @@
                                                 data-vendor_id="{{ $vendor->id }}"
                                                 data-vendor_first_name="{{ $vendor->name }}"
                                                 data-vendor_last_name="{{ $vendor->lastName }}"
-                                                data-vendor_address="{{ $vendor->name }}"
-                                                data-vendor_city="{{ $vendor->name }}"
-                                                data-vendor_state="{{ $vendor->name }}"
-                                                data-vendor_zip_code="{{ $vendor->name }}"
-                                                data-vendor_phone_number="{{ $vendor->name }}"
+                                                data-vendor_address="{{ $vendor->paymentAddress }}"
+                                                data-vendor_city="{{ $vendor->city }}"
+                                                data-vendor_state="{{ $vendor->state }}"
+                                                data-vendor_zip_code="{{ $vendor->zipCode }}"
+                                                data-vendor_phone_number="{{ $vendor->phone }}"
                                                 data-vendor_email="{{ $vendor->email }}"
-                                                data-vendor_fee="{{ $vendor->name }}"
+                                                data-vendor_fee="150"
                                                 data-vendor_additional_service_fee="{{ $vendor->name }}">SELECT</button>
                                             </td>
                                             <td>

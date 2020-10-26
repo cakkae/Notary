@@ -410,9 +410,9 @@ function validate(formData, jqForm, options) {
                             $('.vendor_first_name').val(JSON.stringify(response.data[0].name).replace(/['"]+/g, '')); 
                             $('.vendor_last_name').val(JSON.stringify(response.data[0].lastName).replace(/['"]+/g, '')); 
                             $('.vendor_address').val(JSON.stringify(response.data[0].paymentAddress).replace(/['"]+/g, '')); 
-                            $('.vendor_city').val(JSON.stringify(response.data[0].lastName).replace(/['"]+/g, '')); 
-                            $('.vendor_state').val(JSON.stringify(response.data[0].lastName).replace(/['"]+/g, '')); 
-
+                            $('.vendor_city').val(JSON.stringify(response.data[0].city).replace(/['"]+/g, '')); 
+                            $('.vendor_state').val(JSON.stringify(response.data[0].state).replace(/['"]+/g, '')); 
+                            $('.vendor_zip_code').val(JSON.stringify(response.data[0].state).replace(/['"]+/g, '')); 
                         }
                     },
                     error: function(jqXHR, textStatus, error) { 
