@@ -41,6 +41,13 @@
                     <div class="tag-container" id="tag-container">
                         <br>
                         <h5>Coverage list:</h5>
+                        @isset(Auth::user()->coverage)
+                            @forelse(json_decode(Auth::user()->coverage, true) as $value)
+                                <span class="dashfolio-tag" name="coverageArea[]">{{ $value["name"] }}</span>
+                            @empty
+                                There is no selected coverage
+                            @endforelse
+                        @endisset
                     </div>   
                 </div>
             </div>
@@ -52,27 +59,51 @@
 
         var selectedCode = [];
 
-        $('.tag-container').on('click', 'span', function() {
-            if(confirm("Remove "+ $(this).text() +"?")) $(this).remove(); 
+        $(".dashfolio-tag").each(function(){
+            var name = $(this).text();
+            item = {}
+            item ["name"] = name;
+            selectedCode.push(item);
         });
 
-
-        // $(document).bind('click', function (e) {
-        //     var target = $(e.target);
-        //     if (target.is('.zipcode_key')) {
-        //         alert($('.zipcode_key').attr('id'));
-        //         $("<span/>", {text:txt, appendTo:"#tag-container", class:"dashfolio-tag"});
-        //     }
-        // });
+        $('.tag-container').on('click', 'span', function() {
+            if(confirm("Remove "+ $(this).text() +"?")) {
+                $(this).remove(); 
+                $.ajax({
+                    url: "{{ route('updateCoverage') }}",
+                    type:'POST',
+                    data: {
+                        _token:_token, 
+                        user_id:user_id, 
+                        selectedCode:JSON.stringify(selectedCode)
+                    },
+                    success: function(data) {
+                        if($.isEmptyObject(data.error)){
+                            toastr.success(data.success);
+                        }else{
+                            toastr.error(data.error);
+                        }
+                    }
+                });
+            }
+        });
 
         $(document).on('click','.zipcode_key',function(){
             var notExist = $(this).is(':checked');
             if(notExist) {
-                selectedCode.push($(this).val());
+                // selectedCode.push($(this).val());
+                var name = $(this).val();
+                item = {}
+                item ["name"] = name;
+                console.log(selectedCode);
+                selectedCode.push(item);
                 $("<span/>", {text:$(this).val(), appendTo:"#tag-container", class:"dashfolio-tag", name:"coverageArea[]"});
             }
             else {
-                selectedCode.splice($.inArray($(this).val(), selectedCode), 1);
+                var name = $(this).val();
+                item = {};
+                item["name"] = name
+                selectedCode.splice($.inArray(item, selectedCode), 1);
                 toastr.success('Postal code '+$(this).val()+ ' successfully deleted');
             }
         });
@@ -81,7 +112,11 @@
             $(".zipcode_key").each(function(){
                 $(this).prop("checked",true);
                 if($(this).is(':checked')) {
-                    selectedCode.push($(this).val());
+                    // selectedCode.push($(this).val());
+                    var name = $(this).val();
+                    item = {}
+                    item ["name"] = name;
+                    selectedCode.push(item);
                     $("<span/>", {text:$(this).val(), appendTo:"#tag-container", class:"dashfolio-tag"});
                 } else {
                     selectedCode.splice($.inArray($(this).val(), selectedCode), 1);
@@ -89,14 +124,6 @@
             });
 
         });
-
-        // $(".zipcode_key").on({
-        //     click : function() {
-        //         var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig,''); // allowed characters
-        //         if(txt) $("<span/>", {text:txt.toLowerCase(), appendTo:"#tag-container", class:"dashfolio-tag"});
-        //         this.value = "";
-        //     }
-        // });
 
         $("#state").change(function() {
             var state_id = $(this).val();
@@ -150,15 +177,13 @@
             var coverage = $("span[name='coverage[]']").text();
             var _token = $("input[name='_token']").val();
 
-            console.log(selectedCode);
-
             $.ajax({
                 url: "{{ route('updateCoverage') }}",
                 type:'POST',
                 data: {
                     _token:_token, 
                     user_id:user_id, 
-                    coverage:coverage
+                    selectedCode:JSON.stringify(selectedCode)
                 },
                 success: function(data) {
                     if($.isEmptyObject(data.error)){
@@ -167,56 +192,12 @@
                         toastr.error(data.error);
                     }
                 }
-            });
-
-            // $('input[name="zipcode_key[]"]').each(function() {
-            //     if($(this).val() != '') 
-            //     {
-            //         var current_value = $(this).val();
-            //         all_selected_value = [];
-            //         all_selected_value.push(current_value);
-            //         $('.selected_zip').val(all_selected_value);
-            //     }
-            // });
-
-            /*if ($this.is(':checked')) {
-                $(this).parent().remove();
-            }*/
-
-        // $(".btn-update").click(function(e){
-        //     e.preventDefault();
-       
-        //     var _token = $("input[name='_token']").val();
-        //     var user_id = $("input[name='user_id']").val();
-        //     var from_email = $(".from_email").val();
-            
-        //     zipcode = [];
-
-            
-        //     /*$('li[name="zipcode_tag[]"]').each(function() {
-        //         // if() 
-        //         // {
-        //             var zipcode_tag = $(this).children().val();
-        //             alert(zipcode_tag);
-        //             // alert($(this).attr('for'))
-        //             var name = $(this).text();
-        //             item = {}
-        //             item ["name"] = name;
-        //             zipcode.push(item);
-        //             console.log(zipcode);
-        //         // }
-        //     });*/
-
-        //     // zipcode:JSON.stringify(zipcode),
-        //     //alert(JSON.stringify(zipcode))
-
-        
-
-       
+            });          
         }); 
 
     });
 </script>
+
 <style>
     .py-20 {
         margin-top: 20px;

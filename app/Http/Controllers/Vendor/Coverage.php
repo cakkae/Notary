@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Vendor;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\GeoData;
+use App\User;
+use Auth;
 
 class Coverage extends Controller
 {
@@ -33,9 +35,16 @@ class Coverage extends Controller
         return response()->json($zipcode);    
     }
 
-    public function update()
+    public function update(Request $request)
     {
-
+        try {
+            $user = User::where('id', Auth::user()->id)->first();
+            $user->coverage = json_decode($request->selectedCode, true);
+            $user->save();
+            return response()->json(['success'=>'Updated successfully']);
+        } catch (Exception $ex) {
+            return response()->json(['error'=>$ex->getMessage()]);
+        }
     }
     
 }

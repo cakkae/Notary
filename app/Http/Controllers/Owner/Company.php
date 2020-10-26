@@ -266,6 +266,27 @@ class Company extends Controller
         }
     }
 
+    public function updatePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|min:8'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error'=> $validator->errors()->first()]);
+        }
+
+        try {
+            \App\User::where('id', $request->user_id)->update(
+                array(
+                    'password' => Hash::make($request->password)
+                ));
+            return response()->json(['success'=>'User password successfully updated.']);
+        } catch (Exception $e) {
+            return response()->json(['error'=> $e.getMessage()]);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      *

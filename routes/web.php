@@ -51,6 +51,7 @@ Route::namespace('Admin')->group(function () {
 Route::namespace('Owner')->group(function () {
     Route::group(['prefix' => 'owner',  'middleware' => 'auth'], function()
     {
+        Route::post('/update_password','Company@updatePassword')->name('update_password')->middleware('role:Owner');
         Route::get('/', 'Dashboard@index')->middleware('role:Owner');
         Route::get('/accouting', 'Accouting@index')->middleware('role:Owner');
         Route::post('/update_superadmin_password', 'Settings@updateSuperAdmin')->name('update_superadmin_password')->middleware('role:Owner');

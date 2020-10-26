@@ -134,6 +134,12 @@
                                                     Edit
                                                 </a>/
                                                 <a href="{{ route('deleteUser', $user->id) }}">Remove</a>
+                                                /
+                                                <a href="javascript::void()"
+                                                    class="changePasswordButton"
+                                                    data-user_id = "{{ $user->id }}">
+                                                    Change password
+                                                </a>
                                             </td>
                                         </tr>
                                         @empty
@@ -226,6 +232,7 @@
                     <option value="1">User</option>
                     <option value="2">Vendor</option>
                     <option value="3">Admin</option>
+                    <option value="5">Client</option>
                 </select>
             </div>
         </div>
@@ -243,6 +250,42 @@
   </div>
 </div>
 <!-- END: EDIT ROLE MODAL -->
+
+<!-- BEGIN: CHANGE PASSWORD MODAL -->
+<div class="modal fade changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form>
+      <div class="modal-body userForm">
+        <input type="hidden" class="edit_user_id" name="user_id">
+        <div class="row">
+            <div class="col-md-12">
+                <label>
+                    Password:
+                </label>
+                <input type="password" class="form-control password" name="password" placeholder="Enter password...">
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-md-3">
+            <button type="button" class="btn btn-danger btn-lg btn-block" data-dismiss="modal">CLOSE</button>
+        </div>
+        <div class="col-md-3">
+            <button type="button" class="btn btn-primary btn-lg btn-block updatePassword">UPDATE</button>
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- END: EDIT USER MODAL -->
 
 <!-- BEGIN: EDIT USER MODAL -->
 <div class="modal fade editUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -296,6 +339,7 @@
                     <option value="1">User</option>
                     <option value="2">Vendor</option>
                     <option value="3">Admin</option>
+                    <option value="5">Client</option>
                 </select>
             </div>
             <div class="col-md-6 py-20">
@@ -377,6 +421,7 @@
                     <option value="1">User</option>
                     <option value="2">Vendor</option>
                     <option value="3">Admin</option>
+                    <option value="5">Client</option>
                 </select>
             </div>
             <div class="col-md-6 py-20">
@@ -414,6 +459,13 @@ $(document).ready(function($){
         }
     });
 
+    $('.changePasswordButton').on('click', function () {
+        var user_id = $(this).data('user_id');
+        $('.changePasswordModal .userForm .edit_user_id').val(user_id);
+        jQuery('.changePasswordModal').modal("show");
+
+    });
+
     $('.editUserButton').on('click', function () {
         
         var name = $(this).data('name');
@@ -446,7 +498,7 @@ $(document).ready(function($){
     
     $('.updateRoleUser').on('click', function () {
         var user_id = $('.userForm .user_id').val();
-        var role_id = $( ".userForm .edit_permission option:selected" ).val();
+        var role_id = $('.userForm .edit_permission option:selected').val();
 
         $.ajax({
                 type:'POST',
@@ -468,6 +520,31 @@ $(document).ready(function($){
                 }
         });
     });
+
+    $('.updatePassword').on('click', function () {
+        var user_id = $('.changePasswordModal .userForm .edit_user_id').val();
+        var password = $('.changePasswordModal .userForm .password').val();
+
+        $.ajax({
+                type:'POST',
+                url: "{{ route('update_password') }}",
+                data: {
+                        user_id: user_id,
+                        password:password
+                    },
+                success: function(data) {
+                    if($.isEmptyObject(data.error)){
+                        toastr.success(data.success);
+                        window.location.reload();
+                    }else{
+                        toastr.error(data.error);
+                    }
+                },
+                error: function(data) { 
+                    toastr.error(data);
+                }
+        });
+    })
 
     $('.updateCurrentUser').on('click', function() {
         var name = $('.userForm .edit_name').val();
