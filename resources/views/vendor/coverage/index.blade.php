@@ -14,7 +14,7 @@
                             <div class="col-md-12 py-20">
                                 <label>State:</label>
                                 <select class="form-control" name="state" id="state">
-                                    <option value="">Select state</option>
+                                    <option value="" disabled>Select state</option>
                                         @foreach($states as $state) 
                                             <option value="{{ $state->state_id }}">{{ $state->state }}  </option>
                                         @endforeach
@@ -29,11 +29,19 @@
                                 <ul id="zipcode" class="zipcode" name="zipcode[]"></ul>
                             </div>
                             <div class="col-md-12">
-                                <button type="button" class="btn btn-lg btn-primary btn-update">Update coverage</button>
+                                <div class="button-group">
+                                    <button type="button" class="btn btn-lg btn-primary btn-update">UPDATE COVERAGE</button>
+                                    <button type="button" class="btn btn-lg btn-primary btn-selectAll" disabled>SELECT ALL</button>
+                                </div>
                             </div>
                         </div>
                     </form>
-                    <input type="text" class="form-control selected_zip">
+                    <!-- <input type="text" class="form-control selected_zip"> -->
+
+                    <div class="tag-container" id="tag-container">
+                        <br>
+                        <h5>Coverage list:</h5>
+                    </div>   
                 </div>
             </div>
         </div>
@@ -41,6 +49,55 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function (){
+
+        var selectedCode = [];
+
+        $('.tag-container').on('click', 'span', function() {
+            if(confirm("Remove "+ $(this).text() +"?")) $(this).remove(); 
+        });
+
+
+        // $(document).bind('click', function (e) {
+        //     var target = $(e.target);
+        //     if (target.is('.zipcode_key')) {
+        //         alert($('.zipcode_key').attr('id'));
+        //         $("<span/>", {text:txt, appendTo:"#tag-container", class:"dashfolio-tag"});
+        //     }
+        // });
+
+        $(document).on('click','.zipcode_key',function(){
+            var notExist = $(this).is(':checked');
+            if(notExist) {
+                selectedCode.push($(this).val());
+                $("<span/>", {text:$(this).val(), appendTo:"#tag-container", class:"dashfolio-tag", name:"coverageArea[]"});
+            }
+            else {
+                selectedCode.splice($.inArray($(this).val(), selectedCode), 1);
+                toastr.success('Postal code '+$(this).val()+ ' successfully deleted');
+            }
+        });
+
+        $('.btn-selectAll').on('click', function() {
+            $(".zipcode_key").each(function(){
+                $(this).prop("checked",true);
+                if($(this).is(':checked')) {
+                    selectedCode.push($(this).val());
+                    $("<span/>", {text:$(this).val(), appendTo:"#tag-container", class:"dashfolio-tag"});
+                } else {
+                    selectedCode.splice($.inArray($(this).val(), selectedCode), 1);
+                }
+            });
+
+        });
+
+        // $(".zipcode_key").on({
+        //     click : function() {
+        //         var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig,''); // allowed characters
+        //         if(txt) $("<span/>", {text:txt.toLowerCase(), appendTo:"#tag-container", class:"dashfolio-tag"});
+        //         this.value = "";
+        //     }
+        // });
+
         $("#state").change(function() {
             var state_id = $(this).val();
             if(state_id){
@@ -51,7 +108,7 @@
                     {
                         if(response) {
                             $("#country").empty();
-                            $("#country").append('<option>Select Country</option>');
+                            $("#country").append('<option disabled>Select Country</option>');
                             $.each(response, function(key, value) {
                                 $("#country").append('<option value="'+key+'">'+value['country']+'</option>');
                             });
@@ -71,11 +128,12 @@
                     {
                         if(response) {
                             $("#zipcode").empty();
+                            $('.btn-selectAll').prop("disabled", false);
                             // $.each(response, function(key, value) {
                             //     $("#zipcode").append(value['zipcode']);
                             // });
                             $.each(response, function (key, value) {
-                                var li = $('<li name="zipcode_tag[]" class="zipcode_tag"><input type="checkbox" name="zipcode_key[]" id="' + key + '" value="' + value['zipcode'] + '"/>' +
+                                var li = $('<li name="zipcode_tag[]" class="zipcode_tag"><input type="checkbox" class="zipcode_key" name="zipcode_key[]" id="' + key + '" value="' + value['zipcode'] + '"/>' +
                                         '<label for="' + key + '" name="zipcode_value[]"></label></li>');
                                 li.find('label').text(value['zipcode']);
                                 $('#zipcode').append(li);
@@ -87,20 +145,43 @@
         })
 
         $('.btn-update').on('click', function(){
-            $('input[name="zipcode_key[]"]').each(function() {
-                if($(this).val() != '') 
-                {
-                    var current_value = $(this).val();
-                    all_selected_value = [];
-                    all_selected_value.push(current_value);
-                    $('.selected_zip').val(all_selected_value);
+            
+            var user_id = $("input[name='user_id']").val();
+            var coverage = $("span[name='coverage[]']").text();
+            var _token = $("input[name='_token']").val();
+
+            console.log(selectedCode);
+
+            $.ajax({
+                url: "{{ route('updateCoverage') }}",
+                type:'POST',
+                data: {
+                    _token:_token, 
+                    user_id:user_id, 
+                    coverage:coverage
+                },
+                success: function(data) {
+                    if($.isEmptyObject(data.error)){
+                        toastr.success(data.success);
+                    }else{
+                        toastr.error(data.error);
+                    }
                 }
             });
-            
+
+            // $('input[name="zipcode_key[]"]').each(function() {
+            //     if($(this).val() != '') 
+            //     {
+            //         var current_value = $(this).val();
+            //         all_selected_value = [];
+            //         all_selected_value.push(current_value);
+            //         $('.selected_zip').val(all_selected_value);
+            //     }
+            // });
+
             /*if ($this.is(':checked')) {
                 $(this).parent().remove();
             }*/
-        })
 
         // $(".btn-update").click(function(e){
         //     e.preventDefault();
@@ -129,27 +210,12 @@
         //     // zipcode:JSON.stringify(zipcode),
         //     //alert(JSON.stringify(zipcode))
 
-        //     // $.ajax({
-        //     //     url: "{{ route('updateCoverage') }}",
-        //     //     type:'POST',
-        //     //     data: {
-        //     //         _token:_token, 
-        //     //         user_id:user_id, 
-        //     //         email:from_email
-        //     //     },
-        //     //     success: function(data) {
-        //     //         if($.isEmptyObject(data.error)){
-        //     //             toastr.success(data.success);
-        //     //         }else{
-        //     //             toastr.error(data.error);
-        //     //         }
-        //     //     }
-        //     // });
+        
 
        
-        // }); 
+        }); 
 
-    })
+    });
 </script>
 <style>
     .py-20 {
@@ -167,5 +233,40 @@
     label {
         padding: 5px;
     }
+    .tag-container {
+        max-width: 100%;
+    }
+
+    .dashfolio-tag {
+    cursor:pointer;
+    background-color: #3490dc;
+    padding: 5px 10px 5px 10px;
+    display: inline-block;
+    margin-top: 3px; /*incase tags go in next line, will space */
+    color:#fff;
+    margin-right: 4px;
+    font-size: 18px;
+    padding-right: 20px; /* adds space inside the tags for the 'x' button */
+    }
+
+    .dashfolio-tag:hover{
+    opacity:0.7;
+    }
+
+    .dashfolio-tag:after { 
+    position:absolute;
+    content:"×";
+    /* padding:2px 2px; */
+    margin-left:2px;
+    font-size:18px;
+    }
+
+    #add-tag-input {
+    background:#eee;
+    border:0;
+    margin:6px 6px 6px 0px ; /* t r b l */
+    padding:5px;
+    width:auto;
+    }      
 </style>
 @endsection

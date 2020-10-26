@@ -85,11 +85,14 @@
             var companyName = $("input[name='companyName']").val();
             var taxId = $("input[name='taxId']").val();
             var paymentAddress = $("input[name='paymentAddress']").val();
-       
+            var city = $("input[name='city']").val();
+            var state = $("input[name='state']").val();
+            var zipCode = $("input[name='zipCode']").val();
+
             $.ajax({
                 url: "{{ route('updateAccountSettings') }}",
                 type:'POST',
-                data: {_token:_token, user_id:user_id, name:name, companyName:companyName, lastName:lastName, middleName:middleName, taxId: taxId, paymentAddress: paymentAddress},
+                data: {_token:_token, user_id:user_id, name:name, companyName:companyName, lastName:lastName, middleName:middleName, taxId: taxId, paymentAddress: paymentAddress, city: city, state: state, zipCode: zipCode},
                 success: function(data) {
                     if($.isEmptyObject(data.error)){
                         toastr.success(data.success);

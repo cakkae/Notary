@@ -21,7 +21,8 @@ class Pricing extends Controller
             $pricing = \App\Models\Pricing::where('user_id', Auth::user()->id)->first();
             if(!empty($pricing)) {
                 try {
-                    $pricing = \App\Models\Pricing::where('user_id', request('user_id'))->update(request()->except(['_token','user_id']));
+                    $input = $request->all();
+                    $pricing->fill($input)->save();
                     return response()->json(['success'=>'Updated successfully']);
                 } catch (Exception $ex) {
                     return response()->json(['error'=>$validator->errors()->all()]);

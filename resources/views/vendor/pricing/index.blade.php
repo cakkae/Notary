@@ -22,51 +22,51 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Deeds</label>
-                                <input type="number" name="deeds" class="form-control" value="0">
+                                <input type="number" name="deeds" class="form-control" value="{{ $pricing->deeds ?? '' }}">
                             </div>
                             <div class="col-md-6">
                                 <label>Trust</label>
-                                <input type="number" name="trust" class="form-control" value="0">
+                                <input type="number" name="trust" class="form-control" value="{{ $pricing->trust ?? '' }}">
                             </div>
                         </div>
                         <div class="row py-20">
                             <div class="col-md-6">
                                 <label>Refinance</label>
-                                <input type="number" name="refinance" class="form-control" value="0">
+                                <input type="number" name="refinance" class="form-control" value="{{ $pricing->refinance ?? '' }}">
                             </div>
                             <div class="col-md-6">
                                 <label>Purchase</label>
-                                <input type="number" name="purchase" class="form-control" value="0">
+                                <input type="number" name="purchase" class="form-control" value="{{ $pricing->purchase ?? '' }}">
                             </div>
                         </div>
                         <div class="row py-20">
                             <div class="col-md-6">
                                 <label>Reverse</label>
-                                <input type="number" name="reverse" class="form-control" value="0">
+                                <input type="number" name="reverse" class="form-control" value="{{ $pricing->reverse ?? '' }}">
                             </div>
                             <div class="col-md-6">
                                 <label>SBA</label>
-                                <input type="number" name="sba" class="form-control" value="0">
+                                <input type="number" name="sba" class="form-control" value="{{ $pricing->sba ?? '' }}">
                             </div>
                         </div>
                         <div class="row py-20">
                             <div class="col-md-6">
                                 <label>Commercial</label>
-                                <input type="number" name="commercial" class="form-control" value="0">
+                                <input type="number" name="commercial" class="form-control" value="{{ $pricing->commercial ?? '' }}">
                             </div>
                             <div class="col-md-6">
                                 <label>Split Closing</label>
-                                <input type="number" name="split_closing" class="form-control" value="0">
+                                <input type="number" name="split_closing" class="form-control" value="{{ $pricing->split_closing ?? '' }}">
                             </div>
                         </div>
                         <div class="row py-20">
                             <div class="col-md-6">
                                 <label>Applications</label>
-                                <input type="number" name="applications" class="form-control" value="0">
+                                <input type="number" name="applications" class="form-control" value="{{ $pricing->applications ?? '' }}">
                             </div>
                             <div class="col-md-6">
                                 <label>Walk-in Recordings</label>
-                                <input type="number" name="walk_in_recordings" class="form-control" value="0">
+                                <input type="number" name="walk_in_recordings" class="form-control" value="{{ $pricing->walk_in_recordings ?? '' }}">
                             </div>
                         </div>
                         <div class="row py-20">
@@ -77,19 +77,19 @@
                                         <label>Monday</label>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="monday_from">
+                                        <input type="time" class="form-control" name="monday_from" value="{{ $pricing->monday_from ?? '' }}">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="monday_to">
+                                        <input type="time" class="form-control" name="monday_to" value="{{ $pricing->monday_to ?? '' }}">
                                     </div>
                                     <div class="col-md-2">
                                         <label>Tuesday</label>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="tuesday_from">
+                                        <input type="time" class="form-control" name="tuesday_from" value="{{ $pricing->tuesday_from ?? '' }}">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="tuesday_to">
+                                        <input type="time" class="form-control" name="tuesday_to" value="{{ $pricing->tuesday_to ?? '' }}">
                                     </div>
                                 </div>
                                 <div class="row py-20">
@@ -97,19 +97,19 @@
                                         <label>Wednesday</label>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="wednesday_from">
+                                        <input type="time" class="form-control" name="wednesday_from" value="{{ $pricing->wednesday_from ?? '' }}">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="wednesday_to">
+                                        <input type="time" class="form-control" name="wednesday_to" value="{{ $pricing->wednesday_to ?? '' }}">
                                     </div>
                                     <div class="col-md-2">
                                         <label>Thursday</label>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="thursday_from">
+                                        <input type="time" class="form-control" name="thursday_from" value="{{ $pricing->thursday_from ?? '' }}">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="thursday_to">
+                                        <input type="time" class="form-control" name="thursday_to" value="{{ $pricing->thursday_to ?? '' }}">
                                     </div>
                                 </div>
                                 <div class="row py-20">
@@ -117,19 +117,19 @@
                                         <label>Friday</label>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="friday_from">
+                                        <input type="time" class="form-control" name="friday_from" value="{{ $pricing->friday_from ?? '' }}">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="friday_to">
+                                        <input type="time" class="form-control" name="friday_to" value="{{ $pricing->friday_to ?? '' }}">
                                     </div>
                                     <div class="col-md-2">
                                         <label>Saturday</label>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="saturday_from">
+                                        <input type="time" class="form-control" name="saturday_from" value="{{ $pricing->saturday_from ?? '' }}">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="saturday_to">
+                                        <input type="time" class="form-control" name="saturday_to" value="{{ $pricing->saturday_to ?? '' }}">
                                     </div>
                                 </div>
                                 <div class="row py-20">
@@ -137,10 +137,10 @@
                                         <label>Sunday</label>
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="sunday_from">
+                                        <input type="time" class="form-control" name="sunday_from" value="{{ $pricing->sunday_from ?? '' }}">
                                     </div>
                                     <div class="col-md-2">
-                                        <input type="time" class="form-control" name="sunday_to">
+                                        <input type="time" class="form-control" name="sunday_to" value="{{ $pricing->sunday_to ?? '' }}">
                                     </div>
                                 </div>
                             </div>
@@ -201,12 +201,30 @@
                 data: { 
                         _token:_token, 
                         user_id:user_id, 
-                        name:name, 
-                        companyName:companyName, 
-                        lastName:lastName, 
-                        middleName:middleName, 
-                        taxId: taxId, 
-                        paymentAddress: paymentAddress
+                        deeds:deeds, 
+                        trust:trust,
+                        refinance:refinance, 
+                        purchase:purchase, 
+                        reverse:reverse, 
+                        sba: sba, 
+                        commercial: commercial,
+                        split_closing:split_closing,
+                        applications:applications,
+                        walk_in_recordings:walk_in_recordings,
+                        monday_from:monday_from,
+                        tuesday_from:tuesday_from,
+                        wednesday_from:wednesday_from,
+                        thursday_from:thursday_from,
+                        friday_from:friday_from,
+                        saturday_from:saturday_from,
+                        sunday_from:sunday_from,
+                        monday_to:monday_to,
+                        tuesday_to:tuesday_to,
+                        wednesday_to:wednesday_to,
+                        thursday_to:thursday_to,
+                        friday_to:friday_to,
+                        saturday_to:saturday_to,
+                        sunday_to:sunday_to
                     },
                 success: function(data) {
                     if($.isEmptyObject(data.error)){
