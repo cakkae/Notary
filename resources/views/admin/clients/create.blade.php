@@ -53,8 +53,6 @@
 <script>
 $(document).ready(function ($){
 
-    $('.client_phone').mask('123-123-1234');
-
     $('.addNewClient').on('click', function() {
         $.ajaxSetup({
             headers: {

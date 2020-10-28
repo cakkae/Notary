@@ -30,14 +30,25 @@ Route::namespace('Admin')->group(function () {
         Route::get('/dashboard', 'Dashboard@index');
         Route::get('/order', 'Order@index');
         Route::get('/notary', 'Notary@index');
+        // Clients
         Route::post('/update_client_password', 'Users@updateClientPassword')->name('update_client_password');
         Route::get('/clients', 'Users@clients')->name('client.index');
         Route::get('/clients/create', 'Users@create')->name('client.create');
         Route::post('/clients/store', 'Users@store')->name('client.store');
         Route::get('/deleteClient/{user_id}', 'Users@deleteClient')->name('deleteClient');
+        
+        // Users
+        Route::post('/update_user_password', 'Users@updateUserPassword')->name('update_user_password');
+        Route::post('/update_current_user', 'Users@updateCurrentUser')->name('update_current_user');
+        Route::get('/users', 'Users@users')->name('user.index');
+        Route::get('/users/create', 'Users@createUser')->name('user.create');
+        Route::post('/users/store', 'Users@storeUser')->name('user.store');
+        
+        // Vendor
         Route::get('/notary', 'Notary@notaries')->name('notary.index');
         Route::get('/notary/create', 'Notary@create')->name('notary.create');
         Route::post('/notary/store', 'Notary@store')->name('notary.store');
+
         Route::get('/orders', 'Users@index');
         Route::get('/reports', 'Reports@index');
         Route::get('/settings', 'Settings@index');
