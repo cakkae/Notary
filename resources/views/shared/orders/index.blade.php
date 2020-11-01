@@ -220,6 +220,51 @@ function validate(formData, jqForm, options) {
             }
         });
 
+        $('.clear_vendor_info').on('click', function() {
+            $('.vendor_first_name').val("");
+            $('.vendor_last_name').val("");
+            $('.vendor_address').val("");
+            $('.vendor_city').val("");
+            $('.vendor_state').val("");
+            $('.vendor_zip_code').val("");
+            $('.vendor_phone_number').val("");
+            $('.vendor_email').val("");
+            $('.vendor_fee').val("");
+            $('.vendor_additional_service_fee').val("");
+        });
+
+        $('.btn_notary_details').on('click', function() {
+            var vendor_id = $(this).data("vendor_id");
+            $.ajax({
+                type: "get",
+                url: "{{ url('/getVendorById') }}/"+vendor_id,
+                success: function(response)
+                {
+                    if(response) {
+                        var coverageLength = JSON.parse(response.data[0].coverage).length;
+                        var coverage = response.data[0].coverage;
+                        $('#vendor_name').text(response.data[0].name);
+                        $('#vendor_surname').text(response.data[0].lastName);
+                        $('#vendor_middlename').text(response.data[0].middleName);
+                        $('#vendor_phone').text(response.data[0].phone);
+                        $('#vendor_paymentAddress').text(response.data[0].paymentAddress);
+                        $('#vendor_zipCode').text(response.data[0].zipCode);
+                        $('#vendor_state').text(response.data[0].state);
+                        $('#vendor_city').text(response.data[0].city);
+                        $('#vendor_email').text(response.data[0].email);
+                        for (var i = 0; i < coverageLength; i++) {
+                            $('#vendor_coverage').append((JSON.parse(coverage)[i].name)+", ");
+                        }
+                        $('.vendorDetails').removeClass('hide').addClass('show');
+
+                    }
+                },
+                error: function(jqXHR, textStatus, error) { 
+                    alert(error);
+                }
+            });
+        });
+
         $('#form-send-email').on('click', function(event){
             
             event.preventDefault();
@@ -357,11 +402,28 @@ function validate(formData, jqForm, options) {
             $('.edit_borrower_last_name').val(borrower_last_name);
             $('.edit_borrower_email').val(borrower_email);
 
-            $('.edit_coborrower_name').val(coborrower_name);
-            $('.edit_coborrower_middle_name').val(coborrower_middle_name);
-            $('.edit_coborrower_last_name').val(coborrower_last_name);
+            $('#edit_coborrower_table tbody').html("");
+            var coborrower_length = JSON.stringify(coborrower_name.length);
+            var html = '';
+            for(var i=0; i<coborrower_length; i++)
+            {
+                var name = JSON.stringify(coborrower_name[i].name);
+                var middle_name = JSON.stringify(coborrower_middle_name[i].middle_name);
+                var last_name = JSON.stringify(coborrower_last_name[i].last_name);
 
-            console.log("HERE IS COBORROWER: "+JSON.stringify(coborrower_name))
+                html += '<tr>';
+                html += '<td><input type="text" name="edit_coborrower_name[]" class="form-control edit_coborrower_name" value='+name+'/></td>';
+                html += '<td><input type="text" name="edit_coborrower_middle_name[]" class="form-control edit_coborrower_middle_name" value='+middle_name+'/></td>';
+                html += '<td><input type="text" name="edit_coborrower_last_name[]" class="form-control edit_coborrower_last_name" value='+last_name+'/></td>';
+                html += '<td><button type="button" name="remove" class="btn btn-danger btn-block remove"><i class="fas fa-times" style=" vertical-align: middle !important;"></button></td>';
+            }
+            $('#edit_coborrower_table tbody').append(html);
+
+            // $('.edit_coborrower_name').val(JSON.stringify(coborrower_name[0].name));
+            // $('.edit_coborrower_middle_name').val(JSON.stringify(coborrower_middle_name));
+            // $('.edit_coborrower_last_name').val(JSON.stringify(coborrower_last_name));
+
+            console.log("HERE IS COBORROWER: "+(JSON.stringify(coborrower_name.length)));
 
             $('.edit_contact_number_home').val(contact_number_home);
             $('.edit_contact_number_mobile').val(contact_number_mobile);
@@ -492,6 +554,7 @@ function validate(formData, jqForm, options) {
             var borrower_last_name = $("input[name='edit_borrower_last_name']").val();
             var borrower_email = $("input[name='edit_borrower_email']").val();
 
+            
             coborrower_name = [];
             coborrower_middle_name = [];
             coborrower_last_name = [];

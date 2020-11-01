@@ -74,7 +74,7 @@
                                             <td>{{ $vendor->name }}</td>
                                             <td>{{ $vendor->lastName }}</td>
                                             <td>{{ $vendor->email }}</td>
-                                            <td>432 km</td>
+                                            <td><button type="button" class="btn btn-outline-dark">Calculate distance</button></td>
                                             <td>40</td>
                                             <td>
                                                 <button type="button" class="btn btn-primary btn_select_notary btn-block"
@@ -92,7 +92,8 @@
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-success btn_notary_details btn-block"
-                                                data-vendor_first_name="{{ $vendor->name }}">NOTARY DETAILS</button>
+                                                data-vendor_first_name="{{ $vendor->name }}"
+                                                data-vendor_id="{{ $vendor->id }}">NOTARY DETAILS</button>
                                             </td>
                                         </tr>
                                         @empty
@@ -104,8 +105,46 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="col-md-12 vendorDetails hide">
+                            <h4>Vendor details:</h4>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>Name:</th>
+                                                <th>Surname:</th>
+                                                <th>Middlename:</th>
+                                                <th>Phone:</th>
+                                                <th>Payment address:</th>
+                                                <th>Zip code:</th>
+                                                <th>State:</th>
+                                                <th>City:</th>
+                                                <th>Email:</th>
+                                                <th>Coverage:</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td id="vendor_name"></td>
+                                                <td id="vendor_surname"></td>
+                                                <td id="vendor_middlename"></td>
+                                                <td id="vendor_phone"></td>
+                                                <td id="vendor_paymentAddress"></td>
+                                                <td id="vendor_zipCode"></td>
+                                                <td id="vendor_state"></td>
+                                                <td id="vendor_city"></td>
+                                                <td id="vendor_email"></td>
+                                                <td id="vendor_coverage"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-12">
                         <h4>Notary Info</h4>
+                        <button type="button" class="btn btn-primary clear_vendor_info">CLEAR INFO</button>
                         <input type="hidden" class="form-control vendor_id" name="edit_vendor_id">
                         </div>
                         <div class="col-md-6 py-20">
@@ -142,7 +181,7 @@
                         </div>
                         <div class="col-md-4 py-20">
                             <label>Fee:</label>
-                            <input type="text" class="form-control vendor_fee" name="edit_vendor_fee" value="150" readonly>
+                            <input type="text" class="form-control vendor_fee" name="edit_vendor_fee" value="150">
                         </div>
                         <div class="col-md-12 py-20">
                             <label>Additional Service Fee:</label>
@@ -217,7 +256,7 @@
                         </div>
                         <div class="col-md-6 py-20">
                             <label>Co Borrower Name</label>
-                            <table class="table table-bordered" id="coborrower_table">
+                            <table class="table table-bordered" id="edit_coborrower_table">
                             <span id="error"></span>
                             <thead>
                                 <tr>
@@ -232,12 +271,12 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input type="text" name="edit_coborrower_name[]" class="form-control coborrower_name" /></td>
-                                    <td><input type="text" name="edit_coborrower_middle_name[]" class="form-control coborrower_middle_name" /></td>
-                                    <td><input type="text" name="edit_coborrower_last_name[]" class="form-control coborrower_last_name" /></td>
+                                {{-- <tr>
+                                    <td><input type="text" name="edit_coborrower_name[]" class="form-control edit_coborrower_name" /></td>
+                                    <td><input type="text" name="edit_coborrower_middle_name[]" class="form-control edit_coborrower_middle_name" /></td>
+                                    <td><input type="text" name="edit_coborrower_last_name[]" class="form-control edit_coborrower_last_name" /></td>
                                     <td><button type="button" name="remove" class="btn btn-danger btn-block remove"><i class="fas fa-times" style=" vertical-align: middle !important;"></button></td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                             <tfoot></tfoot>
                             </table>

@@ -121,7 +121,6 @@ Route::get('/current_user_edit_orders', 'Shared\Order@currentUserEditRequest')->
 // TITLE COMPANY (User and Admin)
 Route::get('title_company', 'Shared\Order@titleCompany')->name('titleCompany')->middleware('role:User,Admin');
 
-
 Route::post('/sendTestEmail', 'Shared\SendTestEmail@send_email')->name('sendTestEmail');
 Route::get('/shared/vendors', 'Shared\Vendor@index')->name('shared.vendors');
 Route::get('/shared/vendors/create', 'Shared\Vendor@create')->name('vendor.create');
